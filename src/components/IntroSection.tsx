@@ -4,19 +4,41 @@ import { motion } from 'framer-motion';
 
 const IntroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const scannerRef = useRef<HTMLDivElement>(null);
+  const scannerLidRef = useRef<HTMLDivElement>(null);
+  const scanLineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current) return;
+      if (!sectionRef.current || !scannerRef.current || !scannerLidRef.current || !scanLineRef.current) return;
       
       const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const scrollProgress = Math.min(1, scrollY / viewportHeight);
+      
+      // Scanner opacity and scale reduces as we scroll
       const opacity = Math.max(0, 1 - scrollY / 500);
-      const scale = Math.max(0.8, 1 - scrollY / 2000);
-      const translateY = scrollY * 0.3;
+      const scale = Math.max(0.8, 1 - scrollY / 1500);
+      
+      // Scanner lid closes as we scroll
+      const lidRotation = scrollProgress * 90; // 0 to 90 degrees
       
       if (sectionRef.current) {
         sectionRef.current.style.opacity = opacity.toString();
-        sectionRef.current.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+        sectionRef.current.style.transform = `scale(${scale})`;
+      }
+      
+      if (scannerLidRef.current) {
+        scannerLidRef.current.style.transform = `rotateX(${lidRotation}deg)`;
+        // Change z-index to show lid on top as it closes
+        scannerLidRef.current.style.zIndex = scrollProgress > 0.5 ? '10' : '1';
+      }
+      
+      // Animate scan line on initial view
+      if (scanLineRef.current && scrollY < 100) {
+        scanLineRef.current.style.animation = 'scanAnimation 2s infinite alternate';
+      } else if (scanLineRef.current) {
+        scanLineRef.current.style.animation = 'none';
       }
     };
     
@@ -27,110 +49,121 @@ const IntroSection = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Add animation styles for the scanning effect
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes scanAnimation {
+        0% { transform: translateY(0); opacity: 0.7; }
+        100% { transform: translateY(100%); opacity: 0.3; }
+      }
+      
+      .scanner-top {
+        transform-origin: bottom;
+        transition: transform 0.3s ease-out;
+        backface-visibility: hidden;
+      }
+      
+      .scanner-body {
+        perspective: 1000px;
+        transform-style: preserve-3d;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
     <div 
       ref={sectionRef} 
       className="h-screen w-full fixed top-0 left-0 flex items-center justify-center z-0 pointer-events-none overflow-hidden"
     >
       <div className="container mx-auto px-4 relative">
-        <div className="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[-50px] right-[-100px] w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[80px] animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="text-center md:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400">
-                Machine Learning Engineer
-              </h1>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <p className="text-xl md:text-2xl mt-4 text-muted-foreground">
-                Creating the future with Generative AI
-              </p>
-            </motion.div>
-          </div>
-          
-          <div className="relative flex justify-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="relative"
-            >
-              <div className="relative w-64 h-64 md:w-80 md:h-80">
-                <div className="absolute top-[-20px] left-[-20px] right-[-20px] bottom-[-20px] bg-gradient-to-br from-primary/30 to-blue-400/30 rounded-full blur-lg"></div>
-                <div className="relative z-10 w-full h-full">
-                  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#1d9bf0" />
-                        <stop offset="100%" stopColor="#4b6fff" />
-                      </linearGradient>
-                    </defs>
-                    <path 
-                      fill="url(#gradient)" 
-                      d="M45.4,-53.2C58.3,-42.5,68.2,-27.7,72.1,-11C76,-5.7,73.8,11.5,67.1,26.7C60.3,41.9,49,55,34.6,63.2C20.2,71.4,2.7,74.6,-14.5,71.9C-31.7,69.1,-48.6,60.4,-61.4,46.8C-74.3,33.1,-83.1,14.5,-80.9,-2.2C-78.8,-18.9,-65.8,-33.7,-51.2,-44.7C-36.7,-55.7,-20.6,-62.9,-2.8,-60.1C14.9,-57.3,32.5,-64.1,45.4,-53.2Z" 
-                      transform="translate(100 100)" 
-                      className="animate-morphing"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <img 
-                      src="https://images.unsplash.com/photo-1613294326089-a01b2b450670?q=80&w=1974&auto=format&fit=crop" 
-                      alt="AI visualization" 
-                      className="w-3/4 h-3/4 object-cover rounded-full shadow-lg" 
-                    />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="scanner-container relative w-full max-w-4xl mx-auto"
+        >
+          {/* Scanner body */}
+          <div ref={scannerRef} className="scanner-body bg-gradient-to-r from-gray-300 to-gray-200 rounded-lg shadow-2xl relative mx-auto" style={{ width: '80%', height: '50vh' }}>
+            {/* Scanner glass/bed */}
+            <div className="scanner-glass absolute inset-0 m-8 bg-gradient-to-r from-blue-400/10 to-blue-300/20 rounded-md overflow-hidden">
+              {/* Scanner content - ML/AI related images or text that appear to be scanned */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-center">
+                <div className="text-center">
+                  <h1 className="text-4xl md:text-6xl font-bold text-primary mb-2 opacity-80">Machine Learning Engineer</h1>
+                  <p className="text-xl md:text-2xl text-gray-600 opacity-70">Specializing in Generative AI</p>
+                  
+                  <div className="mt-8 flex justify-center space-x-8">
+                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7zm8 13v-6m-3 3h6" />
+                      </svg>
+                    </div>
+                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+              
+              {/* Scanning line effect */}
+              <div 
+                ref={scanLineRef} 
+                className="h-4 w-full bg-gradient-to-b from-blue-400/70 to-transparent absolute top-0 left-0"
+                style={{ animation: 'scanAnimation 2s infinite alternate' }}
+              ></div>
+            </div>
             
-            {/* Floating elements */}
-            <motion.div 
-              className="absolute top-10 left-0 bg-white p-2 rounded-lg shadow-lg flex items-center justify-center w-14 h-14"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              style={{ animationDelay: '1s' }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.4 28.4" className="w-10 h-10">
-                <path fill="#1d9bf0" d="M13.4,0.9c0.4-0.4,1.1-0.4,1.6,0l13,13c0.4,0.4,0.4,1.1,0,1.6l-13,13c-0.4,0.4-1.1,0.4-1.6,0 l-13-13c-0.4-0.4-0.4-1.1,0-1.6L13.4,0.9z"/>
-                <path fill="#fff" d="M11.9,6.4c1.1,0.9,3.5,2.5,6.6,2.5c0.4,0,0.9,0,1.3-0.1c-0.2,0.5-0.4,1.2-0.5,1.9c-0.3,0-0.6,0.1-1,0.1 c-2.3,0-4.3-0.9-5.8-1.8c0.8,1.2,2.4,3.4,5.2,4.7c0.7,0.3,1.4,0.5,2.1,0.7c-0.2,0.5-0.4,1-0.5,1.5c-0.6-0.1-1.2-0.3-1.8-0.6 c-3.6-1.6-5.2-4.8-5.9-6.4c-0.7,1.6-2.3,4.8-5.9,6.4c-0.6,0.3-1.2,0.5-1.8,0.6c-0.1-0.5-0.3-1-0.5-1.5c0.7-0.1,1.4-0.4,2.1-0.7 c2.8-1.3,4.4-3.5,5.2-4.7c-1.5,0.9-3.5,1.8-5.8,1.8c-0.3,0-0.6,0-1-0.1c-0.1-0.6-0.3-1.3-0.5-1.9c0.4,0.1,0.9,0.1,1.3,0.1 C8.4,8.9,10.8,7.3,11.9,6.4 M14.2,2L2.8,13.4l11.4,11.4l11.4-11.4L14.2,2z"/>
-              </svg>
-            </motion.div>
-            
-            <motion.div 
-              className="absolute bottom-10 right-0 bg-white p-2 rounded-lg shadow-lg flex items-center justify-center w-16 h-16"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" className="w-12 h-12">
-                <path fill="#1d9bf0" d="M17.41,36A17.67,17.67,0,0,1,0,18.59,17.67,17.67,0,0,1,17.41,0,17.67,17.67,0,0,1,35.08,18.59,17.67,17.67,0,0,1,17.41,36Zm-2.94-14.83c-.58,0-1.16,0-1.74,0a1.25,1.25,0,0,1-1.24-.76,1.21,1.21,0,0,1,.35-1.4c.26-.23.61-.35.92-.51a18.76,18.76,0,0,0,2.61-1.52A7.85,7.85,0,0,0,17.8,13.8a5,5,0,0,0,.3-1.44c0-.31.14-.41.47-.41H19c.35,0,.47.09.5.43a5.28,5.28,0,0,0,.38,1.62A7.41,7.41,0,0,0,22.36,17a21.1,21.1,0,0,0,2.38,1.35c.36.18.74.34,1.11.53a1.22,1.22,0,0,1,.66,1.49,1.33,1.33,0,0,1-1.29.8H14.47Z"/>
-              </svg>
-            </motion.div>
-            
-            <motion.div 
-              className="absolute top-1/2 transform -translate-y-1/2 -right-4 bg-white p-1 rounded-lg shadow-lg flex items-center justify-center w-10 h-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-            >
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8">
-                <path fill="#1d9bf0" d="M16.5,19.5h-9V18h9V19.5z M16.5,13.5h-9V12h9V13.5z M16.5,7.5h-9V6h9V7.5z M12,24c-6.63,0-12-5.37-12-12 S5.37,0,12,0s12,5.37,12,12S18.63,24,12,24z M12,1.5C6.21,1.5,1.5,6.21,1.5,12S6.21,22.5,12,22.5S22.5,17.79,22.5,12S17.79,1.5,12,1.5z"/>
-              </svg>
-            </motion.div>
+            {/* Scanner buttons/panel - side of scanner */}
+            <div className="scanner-panel absolute -right-8 top-1/4 bg-gray-800 h-24 w-12 rounded-r-lg flex flex-col justify-center items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-green-500"></div>
+              <div className="w-6 h-6 rounded-full bg-red-500"></div>
+              <div className="w-6 h-2 rounded-full bg-blue-500"></div>
+            </div>
           </div>
-        </div>
+          
+          {/* Scanner top/lid */}
+          <div 
+            ref={scannerLidRef} 
+            className="scanner-top bg-gradient-to-b from-gray-400 to-gray-300 rounded-t-lg shadow-xl absolute mx-auto"
+            style={{ 
+              width: '80%', 
+              height: '10vh',
+              top: '-10vh',
+              left: '10%',
+              transformOrigin: 'bottom'
+            }}
+          >
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1.5 bg-gray-500 rounded-full"></div>
+          </div>
+        </motion.div>
+        
+        {/* Scroll indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-slow"
+        >
+          <span className="text-sm text-muted-foreground mb-2">Scroll Down to Scan</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.div>
       </div>
     </div>
   );

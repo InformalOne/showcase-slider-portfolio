@@ -46,14 +46,57 @@ const certifications = [
     issuer: "IBM",
     date: "August 2021",
     image: "https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?q=80&w=2070&auto=format&fit=crop"
+  },
+  // Duplicate items for infinite scrolling effect
+  {
+    id: 7,
+    title: "Advanced UX Design",
+    issuer: "Google",
+    date: "February 2023",
+    image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    id: 8,
+    title: "Frontend Web Development",
+    issuer: "Udacity",
+    date: "October 2022",
+    image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=2071&auto=format&fit=crop"
+  },
+  {
+    id: 9,
+    title: "React Certification",
+    issuer: "Meta",
+    date: "July 2022",
+    image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?q=80&w=2070&auto=format&fit=crop"
   }
 ];
 
 const CertificationsSlider = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const autoScrollTimerRef = useRef<number | null>(null);
+
+  const startAutoScroll = () => {
+    if (autoScrollTimerRef.current) {
+      window.clearInterval(autoScrollTimerRef.current);
+    }
+    
+    autoScrollTimerRef.current = window.setInterval(() => {
+      if (sliderRef.current && !isPaused) {
+        sliderRef.current.scrollLeft += 1;
+        
+        // Reset to beginning when reached end for infinite scroll effect
+        if (sliderRef.current.scrollLeft >= sliderRef.current.scrollWidth - sliderRef.current.clientWidth - 20) {
+          sliderRef.current.scrollLeft = 0;
+        }
+        
+        updateScrollButtons();
+      }
+    }, 20); // Smooth, slow scroll
+  };
 
   const updateScrollButtons = () => {
     if (sliderRef.current) {
@@ -96,14 +139,18 @@ const CertificationsSlider = () => {
     if (slider) {
       slider.addEventListener('scroll', updateScrollButtons);
       updateScrollButtons();
+      startAutoScroll();
     }
 
     return () => {
       if (slider) {
         slider.removeEventListener('scroll', updateScrollButtons);
       }
+      if (autoScrollTimerRef.current) {
+        window.clearInterval(autoScrollTimerRef.current);
+      }
     };
-  }, []);
+  }, [isPaused]);
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -132,7 +179,9 @@ const CertificationsSlider = () => {
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative"
+             onMouseEnter={() => setIsPaused(true)}
+             onMouseLeave={() => setIsPaused(false)}>
           {/* Navigation buttons */}
           <button 
             onClick={scrollLeft} 

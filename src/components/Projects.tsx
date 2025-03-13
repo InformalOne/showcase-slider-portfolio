@@ -3,76 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-// Dummy project data
-const projects = [
-  {
-    id: 1,
-    title: "E-commerce UI Redesign",
-    description: "A complete overhaul of an e-commerce platform with focus on user experience and conversion optimization.",
-    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=2070&auto=format&fit=crop",
-    tags: ["UX Design", "UI", "Figma", "Prototyping"],
-    links: {
-      live: "https://example.com",
-      github: "https://github.com"
-    }
-  },
-  {
-    id: 2,
-    title: "Financial Dashboard",
-    description: "Interactive dashboard for financial data visualization with real-time updates and customizable widgets.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
-    tags: ["React", "D3.js", "Tailwind CSS", "API Integration"],
-    links: {
-      live: "https://example.com",
-      github: "https://github.com"
-    }
-  },
-  {
-    id: 3,
-    title: "Task Management App",
-    description: "A productivity application with collaborative features, notifications, and progress tracking.",
-    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=2072&auto=format&fit=crop",
-    tags: ["React Native", "Firebase", "Redux", "Mobile Development"],
-    links: {
-      live: "https://example.com",
-      github: "https://github.com"
-    }
-  },
-  {
-    id: 4,
-    title: "Portfolio Website",
-    description: "A personal portfolio website showcasing projects, skills, and professional journey.",
-    image: "https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?q=80&w=2071&auto=format&fit=crop",
-    tags: ["React", "Tailwind CSS", "Framer Motion", "Responsive Design"],
-    links: {
-      live: "https://example.com",
-      github: "https://github.com"
-    }
-  },
-  {
-    id: 5,
-    title: "AI-Powered Content Creator",
-    description: "An application that leverages AI to help users generate and optimize content for various platforms.",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065&auto=format&fit=crop",
-    tags: ["Python", "Machine Learning", "Next.js", "OpenAI API"],
-    links: {
-      live: "https://example.com",
-      github: "https://github.com"
-    }
-  },
-  {
-    id: 6,
-    title: "Health & Fitness Tracker",
-    description: "A comprehensive application for tracking fitness goals, nutrition, and overall wellness metrics.",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop",
-    tags: ["React", "GraphQL", "Node.js", "MongoDB"],
-    links: {
-      live: "https://example.com",
-      github: "https://github.com"
-    }
-  }
-];
+import { projects } from '@/data/projects';
 
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);

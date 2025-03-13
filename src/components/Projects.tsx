@@ -16,11 +16,11 @@ const Projects = () => {
       const randomIndex = Math.floor(Math.random() * projects.length);
       setRandomHighlight(projects[randomIndex].id);
       
-      // Reset after 2 seconds
+      // Reset after 3 seconds
       setTimeout(() => {
         setRandomHighlight(null);
-      }, 2000);
-    }, 4000);
+      }, 3000);
+    }, 5000);
     
     return () => {
       clearInterval(highlightInterval);
@@ -74,20 +74,15 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div 
               key={project.id}
-              className={cn(
-                "appear-animate opacity-100 transition-all duration-500", 
-                randomHighlight === project.id 
-                  ? "transform scale-105 shadow-xl shadow-primary/20 z-10" 
-                  : ""
-              )}
+              className="appear-animate opacity-100"
               style={{ animationDelay: `${index * 100}ms` }}
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
             >
               <div className={cn(
-                "project-card group h-full flex flex-col", 
+                "project-card group h-full flex flex-col transition-all duration-500",
                 randomHighlight === project.id 
-                  ? "border-primary/30 bg-blue-50/50" 
+                  ? "border-primary border-2 bg-primary/5 shadow-lg shadow-primary/30" 
                   : ""
               )}>
                 <div className="relative w-full h-52 mb-4 overflow-hidden rounded-lg">

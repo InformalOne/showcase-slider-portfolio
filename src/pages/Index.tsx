@@ -97,7 +97,7 @@ const Index = () => {
     <div className="min-h-screen overflow-hidden">
       <Navbar />
       
-      {/* Fixed animated xerox machine background section */}
+      {/* Fixed animated printer as background section */}
       <IntroSection />
       
       {/* Scrollable content container styled to look like paper coming from printer */}
@@ -110,22 +110,22 @@ const Index = () => {
           <div className="w-32 h-1 bg-gray-300 rounded-full"></div>
         </div>
         
-        <div className="content-section">
+        <div id="about" className="content-section">
           <About />
         </div>
-        <div className="content-section">
+        <div id="projects" className="content-section">
           <Projects />
         </div>
-        <div className="content-section">
+        <div id="certifications" className="content-section">
           <CertificationsSlider />
         </div>
-        <div className="content-section">
+        <div id="work-experience" className="content-section">
           <WorkExperience />
         </div>
-        <div className="content-section">
+        <div id="education" className="content-section">
           <Education />
         </div>
-        <div className="content-section">
+        <div id="contact" className="content-section">
           <Contact />
         </div>
         <Footer />

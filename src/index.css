@@ -79,6 +79,11 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground/20;
   }
+
+  /* Fixed blinking images by making all images fully visible by default */
+  img {
+    opacity: 1 !important;
+  }
 }
 
 @layer components {
@@ -123,12 +128,15 @@
     @apply text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl;
   }
 
+  /* Fix for blinking content animations */
   .appear-animate {
-    opacity: 0;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(20px);
   }
 
   .appear-animate.is-visible {
-    @apply animate-fade-in;
+    transform: translateY(0);
   }
 
   .custom-scrollbar-hide::-webkit-scrollbar {
@@ -143,5 +151,16 @@
   .horizontal-slider-mask {
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  }
+  
+  /* Random highlight animation for projects */
+  @keyframes projectHighlight {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(59, 130, 246, 0); }
+    50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(59, 130, 246, 0); }
+  }
+  
+  .project-highlight {
+    animation: projectHighlight 4s ease-in-out;
   }
 }

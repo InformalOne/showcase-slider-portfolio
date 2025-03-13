@@ -8,6 +8,24 @@ import { projects } from '@/data/projects';
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [randomHighlight, setRandomHighlight] = useState<number | null>(null);
+  
+  // Random project highlight effect
+  useEffect(() => {
+    const highlightInterval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * projects.length);
+      setRandomHighlight(projects[randomIndex].id);
+      
+      // Reset after 2 seconds
+      setTimeout(() => {
+        setRandomHighlight(null);
+      }, 2000);
+    }, 4000);
+    
+    return () => {
+      clearInterval(highlightInterval);
+    };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,13 +59,13 @@ const Projects = () => {
     <section id="projects" ref={sectionRef} className="py-20 md:py-32 overflow-hidden">
       <div className="container-tight">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="appear-animate">
+          <div className="appear-animate opacity-100">
             <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
               Portfolio
             </span>
           </div>
-          <h2 className="section-title appear-animate">Featured Projects</h2>
-          <p className="section-subtitle appear-animate">
+          <h2 className="section-title appear-animate opacity-100">Featured Projects</h2>
+          <p className="section-subtitle appear-animate opacity-100">
             A selection of my recent work, showcasing my skills in design, development, and problem-solving.
           </p>
         </div>
@@ -56,14 +74,24 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div 
               key={project.id}
-              className="appear-animate"
+              className={cn(
+                "appear-animate opacity-100 transition-all duration-500", 
+                randomHighlight === project.id 
+                  ? "transform scale-105 shadow-xl shadow-primary/20 z-10" 
+                  : ""
+              )}
               style={{ animationDelay: `${index * 100}ms` }}
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
             >
-              <div className="project-card group h-full flex flex-col">
+              <div className={cn(
+                "project-card group h-full flex flex-col", 
+                randomHighlight === project.id 
+                  ? "border-primary/30 bg-blue-50/50" 
+                  : ""
+              )}>
                 <div className="relative w-full h-52 mb-4 overflow-hidden rounded-lg">
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                  <div className="absolute inset-0 bg-gray-200"></div>
                   <img 
                     src={project.image} 
                     alt={project.title} 

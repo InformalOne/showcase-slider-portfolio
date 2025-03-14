@@ -13,7 +13,7 @@ import Footer from '@/components/Footer';
 const Index = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Add smooth scrolling behavior for anchor links with slower animation
+  // Add smooth scrolling behavior for anchor links with even slower animation
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -101,6 +101,18 @@ const Index = () => {
         opacity: 1 !important;
         visibility: visible !important;
       }
+      
+      /* Project highlight animation - stronger */
+      @keyframes projectHighlight {
+        0% { transform: scale(1); box-shadow: 0 0 0 rgba(59, 130, 246, 0); border-color: rgba(59, 130, 246, 0); }
+        50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(59, 130, 246, 0.9); border-color: rgba(59, 130, 246, 1); background-color: rgba(59, 130, 246, 0.15); }
+        100% { transform: scale(1); box-shadow: 0 0 0 rgba(59, 130, 246, 0); border-color: rgba(59, 130, 246, 0); background-color: transparent; }
+      }
+      
+      .project-highlight {
+        animation: projectHighlight 4s ease-in-out;
+        border-width: 3px;
+      }
     `;
     document.head.appendChild(style);
     
@@ -116,11 +128,11 @@ const Index = () => {
       {/* Fixed animated printer as background section */}
       <IntroSection />
       
-      {/* Scrollable content container styled to look like paper coming from printer */}
+      {/* Scrollable content container - adjusted to have no gap from the printer */}
       <div 
         ref={contentRef}
         className="content-container" 
-        style={{ marginTop: '100vh' }}
+        style={{ marginTop: '0', position: 'relative', zIndex: 20 }}
       >
         <div className="w-full h-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-t-3xl flex justify-center items-center">
           <div className="w-32 h-1 bg-gray-300 rounded-full"></div>

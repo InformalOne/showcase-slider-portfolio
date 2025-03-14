@@ -1,11 +1,14 @@
 
-import React, { useEffect, useState } from 'react';
-import { ArrowDown, Users, Briefcase, GraduationCap, Trophy, Mail } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { ArrowDown, Users, Briefcase, Trophy } from 'lucide-react';
 
 const IntroSection = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activePaper, setActivePaper] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
+  const [welcomeText, setWelcomeText] = useState('Welcome to my portfolio');
+  const scanRef = useRef<NodeJS.Timeout | null>(null);
+  const textTransitionRef = useRef<NodeJS.Timeout | null>(null);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -29,25 +32,32 @@ const IntroSection = () => {
   // Scanning animation effect
   useEffect(() => {
     if (activePaper) {
-      // Start the scanning animation
-      const scanInterval = setInterval(() => {
+      // Start the scanning animation - slower pace
+      scanRef.current = setInterval(() => {
         setScanProgress(prev => {
           if (prev >= 100) {
-            clearInterval(scanInterval);
-            return 100;
+            return 0; // Reset to start a new scan cycle
           }
-          return prev + 1;
+          return prev + 0.5; // Slower speed
         });
-      }, 30);
+      }, 50);
       
-      return () => clearInterval(scanInterval);
+      // Text transition after 3 seconds
+      textTransitionRef.current = setTimeout(() => {
+        setWelcomeText('Scroll down to begin');
+      }, 3000);
+      
+      return () => {
+        if (scanRef.current) clearInterval(scanRef.current);
+        if (textTransitionRef.current) clearTimeout(textTransitionRef.current);
+      };
     }
   }, [activePaper]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Smooth scroll with slower animation
+      // Smooth scroll with even slower animation
       window.scrollTo({
         top: element.offsetTop - 80,
         behavior: 'smooth'
@@ -56,11 +66,11 @@ const IntroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-100">
-      {/* Printer image and container - made bigger */}
-      <div className="relative w-full max-w-5xl mx-auto px-4 h-screen flex items-center justify-center">
-        {/* Main printer body - enlarged */}
-        <div className="relative w-full max-w-4xl aspect-[4/3] bg-[#e8e8e8] rounded-3xl shadow-2xl overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100 pb-0">
+      {/* Printer image and container - made bigger and fully fills the section */}
+      <div className="relative w-full h-screen flex items-center justify-center">
+        {/* Main printer body - enlarged to fill section */}
+        <div className="relative w-full max-w-5xl aspect-[4/3] mx-auto bg-[#e8e8e8] rounded-3xl shadow-2xl overflow-hidden">
           {/* Printer top (scanner lid) */}
           <div 
             className={`absolute inset-0 bg-[#d2d2d2] transition-transform duration-1000 origin-bottom rounded-3xl border-b-2 border-gray-300 ${
@@ -72,26 +82,28 @@ const IntroSection = () => {
             </div>
           </div>
           
-          {/* Scanner glass */}
+          {/* Scanner glass with enhanced graphics */}
           <div className="absolute inset-x-0 top-0 h-3/4 m-8 bg-gray-800/30 rounded-2xl overflow-hidden">
-            {/* A4 paper with scanning effect */}
+            {/* A4 paper with enhanced grid and scanning effect */}
             <div className="absolute inset-2 bg-white rounded-xl flex items-center justify-center overflow-hidden">
-              {/* Blue scanning animation */}
+              {/* Enhanced grid overlay with more visible lines */}
+              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.08)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+              
+              {/* Blue scanning animation - slower and more visible */}
               <div 
-                className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/30 to-transparent"
+                className="absolute inset-x-0 bg-gradient-to-b from-transparent via-blue-400/40 to-transparent"
                 style={{ 
                   top: `${scanProgress - 20}%`,
-                  opacity: activePaper ? 0.6 : 0,
-                  transition: 'top 0.1s linear, opacity 0.5s ease',
+                  opacity: activePaper ? 0.8 : 0,
+                  transition: 'top 0.2s linear, opacity 0.5s ease',
                   height: '20%'
                 }}
               ></div>
               
-              {/* Grid overlay for scanner effect */}
-              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-              
-              {/* Welcome text */}
-              <div className="text-4xl font-bold text-gray-800 z-10">Welcome</div>
+              {/* Welcome text with transition effect */}
+              <div className="text-4xl font-bold text-gray-800 z-10 transition-opacity duration-500">
+                {welcomeText}
+              </div>
             </div>
             
             {/* Scanner light animation */}
@@ -102,14 +114,14 @@ const IntroSection = () => {
             ></div>
           </div>
           
-          {/* Printer control panel - enhanced with more vibrant colors */}
+          {/* Simplified printer control panel with only three buttons */}
           <div className="absolute top-5 right-5 bottom-5 w-24 bg-[#626670] rounded-lg shadow-inner p-2 flex flex-col items-center justify-between">
             {/* Screen */}
             <div className="w-full h-12 bg-gray-200 mb-4 rounded flex items-center justify-center text-xs text-gray-700 font-semibold">
               PORTFOLIO
             </div>
             
-            {/* Navigation buttons with enhanced colors */}
+            {/* Navigation buttons with enhanced colors - only three buttons */}
             <div className="flex flex-col space-y-6 items-center flex-grow">
               <button 
                 className="printer-button bg-[#0EA5E9] hover:bg-[#0EA5E9]/80 transform hover:scale-110 transition-all duration-300" 
@@ -132,26 +144,22 @@ const IntroSection = () => {
               >
                 <Briefcase size={20} />
               </button>
-              <button 
-                className="printer-button bg-[#22C55E] hover:bg-[#22C55E]/80 transform hover:scale-110 transition-all duration-300" 
-                onClick={() => scrollToSection('education')}
-                aria-label="Education section"
-              >
-                <GraduationCap size={20} />
-              </button>
-              <button 
-                className="printer-button bg-[#EF4444] hover:bg-[#EF4444]/80 transform hover:scale-110 transition-all duration-300" 
-                onClick={() => scrollToSection('contact')}
-                aria-label="Contact section"
-              >
-                <Mail size={20} />
-              </button>
             </div>
             
-            {/* Bottom buttons */}
+            {/* Bottom rectangular buttons with rounded edges */}
             <div className="flex flex-col space-y-2 w-full">
-              <button className="w-full h-8 bg-[#22C55E] rounded-full"></button>
-              <button className="w-full h-8 bg-[#EF4444] rounded-full"></button>
+              <button 
+                className="w-full h-8 bg-[#22C55E] rounded-full text-white text-xs font-semibold"
+                onClick={() => scrollToSection('education')}
+              >
+                Education
+              </button>
+              <button 
+                className="w-full h-8 bg-[#EF4444] rounded-full text-white text-xs font-semibold"
+                onClick={() => scrollToSection('contact')}
+              >
+                Contact
+              </button>
             </div>
           </div>
           
@@ -160,8 +168,8 @@ const IntroSection = () => {
         </div>
 
         {/* Brand names on printer */}
-        <div className="absolute bottom-10 left-8 text-xs text-gray-500">BRAND</div>
-        <div className="absolute bottom-10 right-32 text-xs text-gray-500">TechSoScan</div>
+        <div className="absolute bottom-10 left-8 text-xs text-gray-500">PORTFOLIO PRO</div>
+        <div className="absolute bottom-10 right-32 text-xs text-gray-500">TechSoScan 2000</div>
       </div>
     </section>
   );

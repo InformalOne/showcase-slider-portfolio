@@ -21,7 +21,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Custom smooth scroll function with slower animation
+  // Custom smooth scroll function with even slower animation
   const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
@@ -29,10 +29,32 @@ const Navbar = () => {
       const targetId = href.substring(1);
       const element = document.getElementById(targetId);
       if (element) {
-        window.scrollTo({
-          top: element.offsetTop - 80,
-          behavior: 'smooth'
-        });
+        // Slower animation (doubled duration)
+        const startPosition = window.pageYOffset;
+        const targetPosition = element.offsetTop - 80;
+        const distance = targetPosition - startPosition;
+        const duration = 1500; // Increased duration for slower scroll
+        let start: number | null = null;
+        
+        // Custom animation function for smoother scrolling
+        const step = (timestamp: number) => {
+          if (!start) start = timestamp;
+          const progress = timestamp - start;
+          const percentage = Math.min(progress / duration, 1);
+          
+          // Easing function for smoother movement
+          const easeInOutCubic = (t: number) => 
+            t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+          
+          window.scrollTo(0, startPosition + distance * easeInOutCubic(percentage));
+          
+          if (progress < duration) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        
+        window.requestAnimationFrame(step);
+        
         // Close mobile menu if open
         if (mobileMenuOpen) {
           setMobileMenuOpen(false);

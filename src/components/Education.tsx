@@ -91,24 +91,32 @@ const Education = () => {
                   {/* Timeline dot */}
                   <div className="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white transform -translate-x-1/2 mt-6"></div>
                   
+                  {/* Date for desktop - left side for even items, right side for odd items */}
+                  <div className="hidden md:flex md:items-center md:w-24 justify-center">
+                    <div className={`rounded-lg bg-primary text-white text-sm py-1 px-3 font-medium ${index % 2 !== 0 ? 'text-left' : 'text-right'}`}>
+                      {item.duration.split(' - ')[0]}
+                    </div>
+                  </div>
+                  
                   {/* Content */}
                   <div className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300">
                       <div className="flex items-start mb-4">
-                        <GraduationCap className="text-primary w-6 h-6 mt-1 mr-3 md:hidden" />
+                        <GraduationCap className={`text-primary w-6 h-6 mt-1 ${index % 2 === 0 ? 'md:hidden' : 'md:order-first mr-3'}`} />
                         <div className="flex-1">
                           <h3 className="text-xl font-bold">{item.degree}</h3>
                           <h4 className="text-lg text-foreground/80 font-medium mt-1">{item.institution}</h4>
                         </div>
+                        <GraduationCap className={`text-primary w-6 h-6 mt-1 ml-3 ${index % 2 === 0 ? 'md:inline-block hidden' : 'hidden'}`} />
                       </div>
                       
-                      <div className="flex items-center text-sm text-muted-foreground mb-4 md:justify-start gap-4">
+                      <div className={`flex items-center text-sm text-muted-foreground mb-4 gap-4 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
                         <div className="flex items-center">
-                          <Calendar size={16} className="mr-1" />
+                          <Calendar size={16} className={`${index % 2 === 0 ? 'md:order-last md:ml-1 mr-1' : 'mr-1'}`} />
                           <span>{item.duration}</span>
                         </div>
                         <div className="flex items-center">
-                          <MapPin size={16} className="mr-1" />
+                          <MapPin size={16} className={`${index % 2 === 0 ? 'md:order-last md:ml-1 mr-1' : 'mr-1'}`} />
                           <span>{item.location}</span>
                         </div>
                       </div>
@@ -117,24 +125,17 @@ const Education = () => {
                       
                       {item.achievements && item.achievements.length > 0 && (
                         <div>
-                          <h5 className="font-medium mb-2 flex items-center">
-                            <Award size={16} className="mr-2 text-primary" />
+                          <h5 className={`font-medium mb-2 flex items-center ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
+                            <Award size={16} className={`text-primary ${index % 2 === 0 ? 'md:order-last md:ml-2' : 'mr-2'}`} />
                             Achievements
                           </h5>
-                          <ul className="list-disc list-inside text-sm text-muted-foreground pl-2 space-y-1">
+                          <ul className={`list-disc ${index % 2 === 0 ? 'md:list-inside md:pl-0' : 'list-inside'} text-sm text-muted-foreground pl-2 space-y-1`}>
                             {item.achievements.map((achievement, i) => (
                               <li key={i}>{achievement}</li>
                             ))}
                           </ul>
                         </div>
                       )}
-                    </div>
-                  </div>
-                  
-                  {/* Date for desktop */}
-                  <div className="hidden md:flex md:items-center md:w-24 justify-center">
-                    <div className={`rounded-lg bg-primary text-white text-sm py-1 px-3 font-medium ${index % 2 !== 0 ? 'text-right' : 'text-left'}`}>
-                      {item.duration.split(' - ')[0]}
                     </div>
                   </div>
                 </div>

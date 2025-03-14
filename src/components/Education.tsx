@@ -88,8 +88,8 @@ const Education = () => {
             {educationData.map((item, index) => (
               <div key={item.id} className="appear-animate">
                 <div className={`md:flex items-stretch gap-8 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white transform -translate-x-1/2 mt-6"></div>
+                  {/* Timeline dot - moved above to be positioned on top of the content */}
+                  <div className="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white transform -translate-x-1/2 mt-0 z-10"></div>
                   
                   {/* Date for desktop - left side for even items, right side for odd items */}
                   <div className="hidden md:flex md:items-center md:w-24 justify-center">
@@ -99,7 +99,7 @@ const Education = () => {
                   </div>
                   
                   {/* Content */}
-                  <div className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
+                  <div className={`flex-1 ml-12 md:ml-0 pt-6 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300">
                       <div className="flex items-start mb-4">
                         <GraduationCap className={`text-primary w-6 h-6 mt-1 ${index % 2 === 0 ? 'md:hidden' : 'md:order-first mr-3'}`} />

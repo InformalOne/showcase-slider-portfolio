@@ -21,6 +21,26 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Custom smooth scroll function with slower animation
+  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    if (href?.startsWith('#')) {
+      const targetId = href.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 80,
+          behavior: 'smooth'
+        });
+        // Close mobile menu if open
+        if (mobileMenuOpen) {
+          setMobileMenuOpen(false);
+        }
+      }
+    }
+  };
+
   return (
     <header 
       className={cn(
@@ -40,11 +60,11 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/#about" className="navlink">About</Link>
-          <Link to="/#projects" className="navlink">Projects</Link>
-          <Link to="/#certifications" className="navlink">Certifications</Link>
-          <Link to="/#education" className="navlink">Education</Link>
-          <Link to="/#contact" className="navlink">Contact</Link>
+          <a href="#about" className="navlink" onClick={handleNavLinkClick}>About</a>
+          <a href="#projects" className="navlink" onClick={handleNavLinkClick}>Projects</a>
+          <a href="#certifications" className="navlink" onClick={handleNavLinkClick}>Certifications</a>
+          <a href="#education" className="navlink" onClick={handleNavLinkClick}>Education</a>
+          <a href="#contact" className="navlink" onClick={handleNavLinkClick}>Contact</a>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -64,41 +84,41 @@ const Navbar = () => {
           mobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
         )}
       >
-        <Link 
-          to="/#about" 
+        <a 
+          href="#about" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={handleNavLinkClick}
         >
           About
-        </Link>
-        <Link 
-          to="/#projects" 
+        </a>
+        <a 
+          href="#projects" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={handleNavLinkClick}
         >
           Projects
-        </Link>
-        <Link 
-          to="/#certifications" 
+        </a>
+        <a 
+          href="#certifications" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={handleNavLinkClick}
         >
           Certifications
-        </Link>
-        <Link 
-          to="/#education" 
+        </a>
+        <a 
+          href="#education" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={handleNavLinkClick}
         >
           Education
-        </Link>
-        <Link 
-          to="/#contact" 
+        </a>
+        <a 
+          href="#contact" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={handleNavLinkClick}
         >
           Contact
-        </Link>
+        </a>
       </div>
     </header>
   );

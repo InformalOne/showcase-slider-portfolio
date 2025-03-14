@@ -13,7 +13,7 @@ import Footer from '@/components/Footer';
 const Index = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Add smooth scrolling behavior for anchor links
+  // Add smooth scrolling behavior for anchor links with slower animation
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -85,6 +85,22 @@ const Index = () => {
       .content-section:nth-child(4) { animation-delay: 0.4s; }
       .content-section:nth-child(5) { animation-delay: 0.5s; }
       .content-section:nth-child(6) { animation-delay: 0.6s; }
+      
+      /* Blue scanner animation */
+      @keyframes scanLine {
+        0% { top: -20%; }
+        100% { top: 100%; }
+      }
+      
+      .scan-line {
+        animation: scanLine 3s linear infinite;
+      }
+      
+      /* Fix for blinking images */
+      img {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
     `;
     document.head.appendChild(style);
     

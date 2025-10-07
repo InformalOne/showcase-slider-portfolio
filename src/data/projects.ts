@@ -2,10 +2,10 @@
 export const projects = [
   {
     id: 1,
-    title: "E-commerce UI Redesign",
-    description: "A complete overhaul of an e-commerce platform with focus on user experience and conversion optimization.",
+    title: "Piano Notes",
+    description: "An application that converts piano tutorials to piano notes.",
     longDescription: "This comprehensive redesign project focused on improving the customer journey from discovery to checkout. By conducting extensive user research and implementing data-driven design decisions, we were able to increase conversion rates by 28% and reduce cart abandonment by 15%.",
-    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=2070&auto=format&fit=crop",
+    image: "/piano.jpeg",
     tags: ["UX Design", "UI", "Figma", "Prototyping"],
     technologies: ["React", "Figma", "Adobe XD", "CSS", "User Testing"],
     challenge: "The client's existing platform had an outdated interface with a complicated checkout process leading to high cart abandonment rates. The challenge was to simplify the user journey while maintaining all functionality and improving visual appeal.",
@@ -26,7 +26,7 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Financial Dashboard",
+    title: "Comics maker",
     description: "Interactive dashboard for financial data visualization with real-time updates and customizable widgets.",
     longDescription: "This financial dashboard provides users with a comprehensive view of their financial health through intuitive visualizations and real-time data analysis. The application enables users to track investments, monitor spending patterns, and receive personalized financial insights.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
@@ -51,7 +51,7 @@ export const projects = [
   },
   {
     id: 3,
-    title: "Task Management App",
+    title: "Chat with Books App",
     description: "A productivity application with collaborative features, notifications, and progress tracking.",
     longDescription: "This task management application was designed to enhance team productivity by providing a centralized platform for task assignment, progress tracking, and collaboration. The system includes intelligent task prioritization and integrates with existing calendar and email systems.",
     image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=2072&auto=format&fit=crop",
@@ -76,7 +76,7 @@ export const projects = [
   },
   {
     id: 4,
-    title: "Portfolio Website",
+    title: "Todos App",
     description: "A personal portfolio website showcasing projects, skills, and professional journey.",
     longDescription: "This portfolio was designed as a creative showcase of professional work and skills. With a focus on visual appeal and performance optimization, the site provides visitors with an engaging experience while effectively communicating professional capabilities.",
     image: "https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?q=80&w=2071&auto=format&fit=crop",
@@ -101,7 +101,7 @@ export const projects = [
   },
   {
     id: 5,
-    title: "AI-Powered Content Creator",
+    title: "Hand Gesture Recognition",
     description: "An application that leverages AI to help users generate and optimize content for various platforms.",
     longDescription: "This innovative tool uses advanced natural language processing to assist content creators in generating, editing, and optimizing written content for different platforms. The application includes sentiment analysis, readability scoring, and SEO recommendations.",
     image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065&auto=format&fit=crop",
@@ -126,7 +126,7 @@ export const projects = [
   },
   {
     id: 6,
-    title: "Health & Fitness Tracker",
+    title: "Crop Disease Prediction",
     description: "A comprehensive application for tracking fitness goals, nutrition, and overall wellness metrics.",
     longDescription: "This health and fitness application provides users with a holistic approach to tracking their wellness journey. By combining activity monitoring, nutrition logging, and sleep analysis, the app gives users comprehensive insights into their health patterns.",
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop",

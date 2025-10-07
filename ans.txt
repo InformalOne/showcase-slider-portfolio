@@ -1,0 +1,179 @@
+The dashboard meetings do not need the image and current ui, make it as the ui in format page, so i need a preview of the video, for now a video player like place holder in left and at the right corener , i need view details as -> button with hover effect. 
+
+And there is a client summary for each project in the dashoboard. 
+
+so make it fixed like the whatever fields listed in plugin, that many things should be there - with icon, and a view button shoud be there, 
+
+like in client summary change like this, 
+
+rightt now 4 things are in plugin - 
+team, teams , outlook , slack, 
+
+represent with images of it whihc will be uploaded later - 
+
+teams below it main , teams below it dev outlook stake holders outlook meeting of minutes
+
+give it in smart manner
+
+for now u have put some icon, i need it to be image, whihc i will put in assets with names to be added here, it will be changed thoruhg out the app , for it, 
+Plugin page changes - 
+and in plugins -> if editable or plus icon clicked, give some toast message - allow user to select teams , or outllok or slack then next of toast, give configure connection button with text boxes - enter name, and ,schema = professional or personal / company - this acts like tags which is optional and can be fixed also listed as a column for all the rows. which does loading and then with given 
+
+changes in format page - 
+in the second step of format toast - 
+give two categories in top 
+
+teams  |  mail  | slack
+
+if teams clicked we can select things and click + icon to create another list of recipients name
+
+and they should also add the descritpion, short and tags as well for identification
+
+then in step 3 - the similar top bar for selection like - teams  |  mail  | slack
+
+must be repeated and once clicked for each one the Define Message Style box must appear for each 
+
+so these are the format 
+
+final change for account boz in left bar, give full user name, and premium plan with golden font , and some attracive ui for that with ligh blue container 
+
+Make the canges effective - 
+
+1. I have only one video , in the meet/ folder in root, so how many ever folders are there, i videos are there they must be listed with video 1 and increment respectively
+2. GIve an option when clicked inside to edit on double click, so it is not obvious as a sample ui
+3. i have svg icons for gmail, meet , outlook and teams, in src/ assets/ folder, use it rescpectively thorugh out the application
+4. Ensure we can manually dit the description and everything in the dashboard of the app and format pages - no need to indicate , but keep functinoallity to edit on clciking it twice
+5. In mails sent also keep the same everything on double cliick must be editable, no need for it to display search box or anything, as it should not appear visually any search box or of that sort 
+
+-------------
+
+backend - 
+
+Audio Agent (SpeechAgent)
+Role:
+Captures and processes meeting audio into structured, speaker-aware transcripts.
+Functions:
+Uses Whisper or AWS Transcribe to transcribe in real-time.
+Identifies speakers via voice embedding or metadata from Read.ai.
+Emits structured chunks:
+{ "timestamp": 12.5, "speaker": "Alice", "text": "Let's finalize this sprint today." }
+Sends transcripts downstream for analysis.
+Triggers:
+Activated when user presses Cmd/Ctrl + G → “Start Recording.”
+2️⃣ Event Agent (KeywordAgent)
+Role:
+Monitors transcript stream and detects key events, insights, or decisions.
+Functions:
+Performs semantic keyword spotting (e.g., “issue”, “decision”, “deadline”, “next step”).
+Tags contextually important segments.
+Associates timestamps for highlight generation.
+When user presses Cmd/Ctrl + I, it also prioritizes surrounding transcript data (±15s).
+Triggers:
+Automatic semantic detection on live stream.
+Manual mark (Cmd/Ctrl + I) → highlight injection event.
+3️⃣ Context Agent (MemoryAgent)
+Role:
+Maintains conversation context and participant contributions over time.
+Functions:
+Tracks who said what, relevance, and frequency.
+Generates contextual embeddings for continuity (important for long meetings).
+Feeds consolidated state to downstream summary generation.
+Triggers:
+Continuously updated during conversation or when a highlight is marked.
+4️⃣ Summary Agent (ReadAgent)
+Role:
+Combines internal highlights with Read.ai summaries for enhanced accuracy and personalized output.
+Functions:
+Fetches Read.ai summary via API or webhook.
+Cross-verifies with internally generated transcript highlights.
+Synthesizes both into a “Hierarchical Highlight Summary”, with:
+Decision summaries
+Discussion insights
+Action items (auto-tagged)
+Output Example:
+“Alice: Proposed API migration timeline.”
+“Bob: Raised performance issues in Model v2.”
+“Decision: Migration approved for next sprint.”
+5️⃣ Delivery Agent (CommAgent)
+Role:
+Distributes the final summary to intended recipients or systems.
+Functions:
+Formats summary for email, Slack, or Teams chat.
+Attaches transcript snippets and highlight timestamps.
+Optionally posts to company dashboard or Notion-like storage.
+Triggers:
+Triggered when meeting session closes or on-demand from UI “Send Summary.”
+🔄 3. Agent Orchestration (LangGraph Flow)
+Below is the functional orchestration sequence, not literal code.
+🔹 Stage 1: Capture Phase
+User triggers Cmd+G.
+FastAPI signals LangGraph to activate SpeechAgent.
+Audio stream is chunked and transcribed in real-time.
+Each transcript is published to a central event bus (LangGraph node communication).
+🔹 Stage 2: Processing Phase
+KeywordAgent subscribes to transcript stream.
+Detects important statements automatically.
+Adds semantic tags.
+MemoryAgent tracks ongoing discussion threads, participants, and context links.
+Keeps conversation embedding to preserve continuity.
+🔹 Stage 3: Highlight Phase
+User presses Cmd+I to mark an important moment.
+FastAPI emits “highlight event.”
+KeywordAgent extracts context ± 15s of audio around event.
+Stores snippet with timestamp in MongoDB as a highlight event.
+🔹 Stage 4: Summary Phase
+When meeting ends, LangGraph triggers SummaryAgent.
+It pulls:
+Read.ai summary (external)
+All highlights and transcript data
+Combines them via reasoning chain → produces context-weighted summary.
+🔹 Stage 5: Delivery Phase
+CommAgent formats output as:
+HTML email (for Outlook)
+Markdown message (for Slack/Teams)
+Pushes through API integration depending on user preference.
+🧬 4. Orchestration Logic in LangGraph
+Graph Nodes: represent agents (SpeechAgent, KeywordAgent, SummaryAgent, etc.)
+Graph Edges: represent data flow (transcript → analysis → summary → delivery)
+Event Bus: handles real-time stream passing (WebSocket from frontend → backend event router → agents)
+Checkpointing: after every important phase, MongoDB stores state (meeting_id, timestamp, agent output)
+Example Flow (Simplified)
+SpeechAgent
+    ↓ (transcript chunks)
+KeywordAgent
+    ↓ (tagged highlights)
+MemoryAgent
+    ↓ (context embeddings)
+SummaryAgent + ReadAI
+    ↓ (merged report)
+CommAgent
+🗃️ 5. Data Lifecycle Summary
+Stage	Data Type	Stored In	Purpose
+Capture	Audio	S3	Raw recording archive
+Transcription	Text JSON	MongoDB	Speaker-level transcripts
+Highlight	Text + Timestamp	MongoDB	Important moments
+Summary	Markdown/HTML	MongoDB	Final summarized report
+Distribution	Mail/Slack message	External API	Delivery endpoint
+📡 6. Example Orchestration Timeline
+Time (s)	Event	Responsible Agent
+0	Cmd+G pressed → meeting start	FastAPI + SpeechAgent
+60	Speaker “Alice” begins	SpeechAgent
+65	Keyword “deployment issue” detected	KeywordAgent
+75	Cmd+I pressed → mark highlight	Event routed to KeywordAgent
+600	Cmd+G pressed → meeting end	FastAPI terminates stream
+605	SummaryAgent merges insights	SummaryAgent
+610	Summary mailed & stored	CommAgent
+🧱 7. Backend Components Summary
+Component	Description
+FastAPI REST endpoints	Entry points for keyboard triggers & meeting management
+WebSocket layer	Real-time client feedback (recording, timing, highlight acknowledgment)
+LangGraph Orchestration	Core agent runtime and dependency flow
+S3 + MongoDB	Storage for raw + processed artifacts
+Integrations Layer	Read.ai API and message delivery systems
+⚙️ 8. POC Deliverable Expectations
+Phase	Output	Verification
+1. Recording	Local audio → S3	File saved
+2. Transcription	JSON transcript	Text visible in logs
+3. Highlighting	Timestamp-based mark	Highlight appears in DB
+4. Summary	Hybrid report (Read.ai + internal)	Markdown/HTML summary view
+5. Delivery	Message dispatch simulation	Local terminal print / Slack webhook success

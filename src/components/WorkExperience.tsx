@@ -6,44 +6,44 @@ import { Briefcase, Calendar, MapPin, ChevronRight } from 'lucide-react';
 const experiences = [
   {
     id: 1,
-    position: "Senior Machine Learning Engineer",
-    company: "AI Innovations Inc.",
-    location: "San Francisco, CA",
-    duration: "2022 - Present",
+    position: "Machine Learning Engineer",
+    company: "goML pvt ltd.",
+    location: "NewYork, USA",
+    duration: "2024 - Present",
     description: "Leading the development of generative AI models for content creation and image synthesis. Implemented transformer-based architecture that improved output quality by 35%.",
     responsibilities: [
-      "Designing and implementing deep learning models for image and text generation",
-      "Optimizing model performance and reducing inference time by 40%",
-      "Collaborating with product teams to integrate AI capabilities into user-facing applications",
-      "Mentoring junior engineers and conducting knowledge-sharing sessions"
+      "Finetuning LLM's for Fintech company",
+      "Template Generation with respect to personalized documents",
+      "Created Hyper-personalized Marketing Collateral Generation Interface",
+      "Automating data processing workflows to boost ROI by 60% with AI-Driven Marketing Collateral"
     ]
   },
   {
     id: 2,
-    position: "Machine Learning Engineer",
-    company: "DataTech Solutions",
-    location: "Boston, MA",
-    duration: "2020 - 2022",
+    position: "Machine Learning Engineer Intern",
+    company: "goML pvt ltd.",
+    location: "NewYork, USA",
+    duration: "2023 - 2024",
     description: "Developed and deployed machine learning models for natural language processing and computer vision applications. Created a recommendation system that increased user engagement by 28%.",
     responsibilities: [
       "Building end-to-end ML pipelines from data preprocessing to model deployment",
-      "Implementing recommendation algorithms that increased user retention",
-      "Conducting A/B tests to evaluate model performance in production",
-      "Collaborating with data scientists to optimize feature engineering"
+      "Implementing RAG pipelines and Faq chatbot that increased user retention",
+      "Created Hyper-personalized Marketing Collateral Generation Interface",
+      "Automating data processing workflows to boost ROI by 60% with AI-Driven Marketing Collateral"
     ]
   },
   {
     id: 3,
-    position: "Data Scientist",
-    company: "TechStart",
-    location: "Seattle, WA",
-    duration: "2018 - 2020",
-    description: "Analyzed large datasets to extract actionable insights for business decisions. Created dashboards and visualizations to communicate findings to stakeholders.",
+    position: "Web Development Intern",
+    company: "Ceiyone",
+    location: "TN, India",
+    duration: "2022",
+    description: "Developed responsive websites using HTML, CSS, and JavaScript while learning fundamental web development concepts. Collaborated with senior developers to implement client requirements.",
     responsibilities: [
-      "Performing exploratory data analysis on diverse datasets",
-      "Developing predictive models for customer behavior analysis",
-      "Creating interactive visualizations for executive dashboards",
-      "Automating data processing workflows to improve team efficiency"
+    "Building and maintaining responsive web pages using HTML5, CSS3, and JavaScript",
+    "Implementing front-end functionality and user interface components",
+    "Testing website performance and fixing bugs across different browsers",
+    "Learning and applying web development best practices under senior guidance"
     ]
   }
 ];

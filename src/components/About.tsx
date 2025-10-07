@@ -44,27 +44,27 @@ const About = () => {
           </div>
           <h2 className="section-title appear-animate">Who I Am</h2>
           <p className="section-subtitle appear-animate">
-            A passionate creator dedicated to crafting exceptional user experiences through thoughtful design and clean code.
+            An AI/ML engineer dedicated to crafting exceptional user experiences through thoughtful design and clean code.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="appear-animate">
-            <div className="relative rounded-2xl overflow-hidden aspect-square shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
-                alt="About Me" 
-                className="w-full h-full object-cover rounded-2xl p-2"
-              />
-            </div>
-          </div>
+          <div className="relative rounded-2xl overflow-hidden aspect-square shadow-xl">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl"></div>
+      <img
+        src="/hero.png"
+        alt="About Me"
+        className="w-full h-full object-cover object-top rounded-2xl p-2"
+      />
+    </div>
+  </div>
 
           <div className="space-y-8">
             <div className="appear-animate">
               <h3 className="text-2xl font-bold mb-3">My Journey</h3>
               <p className="text-muted-foreground">
-                I'm a multidisciplinary designer and developer with a passion for creating beautiful, functional, and user-centered digital experiences. With a background in both design and development, I bring a unique perspective to every project.
+                I'm a Machine learning engineer and full stack developer with a passion for research in the domain of artificial intelligence. With a background in both design and development, I bring a unique perspective to every project. Having hands on expereince in practical application of Machine learning and Generative AI.
               </p>
             </div>
 
@@ -80,11 +80,11 @@ const About = () => {
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="flex items-center space-x-3 bg-secondary rounded-lg p-3">
                   <Code className="text-primary" size={20} />
-                  <span className="font-medium">Web Development</span>
+                  <span className="font-medium">Python Programming</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-secondary rounded-lg p-3">
                   <PenTool className="text-primary" size={20} />
-                  <span className="font-medium">UI/UX Design</span>
+                  <span className="font-medium">Problem Solving</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-secondary rounded-lg p-3">
                   <Layout className="text-primary" size={20} />
@@ -92,7 +92,7 @@ const About = () => {
                 </div>
                 <div className="flex items-center space-x-3 bg-secondary rounded-lg p-3">
                   <Terminal className="text-primary" size={20} />
-                  <span className="font-medium">Frontend Development</span>
+                  <span className="font-medium">Full Stack Development</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-secondary rounded-lg p-3">
                   <BarChart className="text-primary" size={20} />

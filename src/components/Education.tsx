@@ -6,31 +6,32 @@ import { GraduationCap, Award, Calendar, MapPin } from 'lucide-react';
 const educationData = [
   {
     id: 1,
-    degree: "Master of Science in Computer Science",
-    institution: "Stanford University",
-    location: "Stanford, CA",
-    duration: "2019 - 2021",
-    description: "Specialized in Human-Computer Interaction and Artificial Intelligence. Conducted research on adaptive user interfaces and published papers on interaction design patterns.",
-    achievements: ["Dean's List", "Research Grant Recipient", "Teaching Assistant for Design Thinking course"]
+    degree: "Master of Science in Data Analytics",
+    institution: "San Jose State University",
+    location: "Silicon Valley, CA",
+    duration: "2025 - 2028",
+   description: "Focusing on advanced data analysis techniques, machine learning algorithms, and business intelligence applications. Planning to specialize in predictive analytics and data visualization with emphasis on industry applications.",
+   achievements: ["Currently working"]
   },
   {
     id: 2,
-    degree: "Bachelor of Arts in Design",
-    institution: "Rhode Island School of Design",
-    location: "Providence, RI",
-    duration: "2015 - 2019",
-    description: "Focused on digital media design and interactive systems. Developed a thesis project on immersive digital experiences that was exhibited at the annual showcase.",
-    achievements: ["Graduated with Honors", "Design Excellence Award", "Student Representative"]
-  },
-  {
-    id: 3,
-    degree: "Professional Certification in Product Management",
-    institution: "Product School",
-    location: "San Francisco, CA",
-    duration: "2018",
-    description: "Intensive program covering product strategy, roadmap planning, user research, and product analytics. Completed a capstone project involving market research and product specification.",
-    achievements: ["Capstone Project Excellence", "Peer Mentor"]
+    degree: "Bachelor of Engineering in Computer Science",
+    institution: "Kpr Institute of Engineering and Technology",
+    location: "Coimbatore, TN",
+    duration: "2020 - 2024",
+    description: "Concentrated on core computer science fundamentals including data structures, algorithms, database management, and software development. Completed projects in web development and application design with focus on user experience.",
+    achievements: ["Graduated with Honors", "Class Representative", "Vice Preseident | Software Development Club"]
   }
+  // },
+  // {
+  //   id: 3,
+  //   degree: "Professional Certification in Product Management",
+  //   institution: "Product School",
+  //   location: "San Francisco, CA",
+  //   duration: "2018",
+  //   description: "Intensive program covering product strategy, roadmap planning, user research, and product analytics. Completed a capstone project involving market research and product specification.",
+  //   achievements: ["Capstone Project Excellence", "Peer Mentor"]
+  // }
 ];
 
 const Education = () => {

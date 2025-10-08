@@ -4,17 +4,17 @@ import { GraduationCap, Award, Calendar, MapPin } from 'lucide-react';
 
 // Dummy education data
 const educationData = [
+  // {
+  //   id: 1,
+  //   degree: "Master of Science in Data Analytics",
+  //   institution: "San Jose State University",
+  //   location: "Silicon Valley, CA",
+  //   duration: "2025 - 2028",
+  //  description: "Focusing on advanced data analysis techniques, machine learning algorithms, and business intelligence applications. Planning to specialize in predictive analytics and data visualization with emphasis on industry applications.",
+  //  achievements: ["Currently working"]
+  // },
   {
     id: 1,
-    degree: "Master of Science in Data Analytics",
-    institution: "San Jose State University",
-    location: "Silicon Valley, CA",
-    duration: "2025 - 2028",
-   description: "Focusing on advanced data analysis techniques, machine learning algorithms, and business intelligence applications. Planning to specialize in predictive analytics and data visualization with emphasis on industry applications.",
-   achievements: ["Currently working"]
-  },
-  {
-    id: 2,
     degree: "Bachelor of Engineering in Computer Science",
     institution: "Kpr Institute of Engineering and Technology",
     location: "Coimbatore, TN",

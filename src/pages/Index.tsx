@@ -9,6 +9,7 @@ import WorkExperience from '@/components/WorkExperience';
 import Education from '@/components/Education';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import RomeoSkills from '../components/RomeoSkills';
 
 const Index = () => {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -140,6 +141,9 @@ const Index = () => {
         
         <div id="about" className="content-section">
           <About />
+        </div>
+        <div id="skills" className="content-section">
+          <RomeoSkills />
         </div>
         <div id="projects" className="content-section">
           <Projects />

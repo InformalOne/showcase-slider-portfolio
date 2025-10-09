@@ -1,6 +1,12 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Briefcase, Calendar, MapPin, ChevronRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import styles from './WorkExperience.module.css';
+
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 // Dummy work experience data
 const experiences = [
@@ -50,8 +56,39 @@ const experiences = [
 
 const WorkExperience = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const curveRefs = useRef<(SVGPathElement | null)[]>([]);
 
   useEffect(() => {
+    // Initialize timeline refs array
+    timelineRefs.current = timelineRefs.current.slice(0, experiences.length);
+    curveRefs.current = curveRefs.current.slice(0, experiences.length);
+
+    experiences.forEach((_, index) => {
+      if (timelineRefs.current[index] && curveRefs.current[index]) {
+        const path = curveRefs.current[index];
+        const timelineElement = timelineRefs.current[index];
+        
+        gsap.to(timelineElement, {
+          scrollTrigger: {
+            trigger: timelineElement,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: 1,
+          },
+          motionPath: {
+            path: path,
+            align: path,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: true
+          },
+          duration: 2,
+          ease: 'power1.inOut'
+        });
+      }
+    });
+
+    // Original intersection observer for other animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -76,11 +113,13 @@ const WorkExperience = () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }
+      // Clean up ScrollTrigger
+      ScrollTrigger.getAll().forEach(st => st.kill());
     };
   }, []);
 
   return (
-    <section id="experience" ref={sectionRef} className="py-20 md:py-32 overflow-hidden">
+    <section id="experience" ref={sectionRef} className="py-20 md:py-32 overflow-hidden relative">
       <div className="container-tight">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="appear-animate">
@@ -94,12 +133,40 @@ const WorkExperience = () => {
           </p>
         </div>
 
-        <div className="space-y-10">
+        {/* SVG Timeline */}
+        <svg className="absolute left-0 w-full h-full pointer-events-none" style={{ zIndex: 0, top: '20%' }}>
+          {experiences.map((_, index) => (
+            <path
+              key={`curve-${index}`}
+              ref={ref => curveRefs.current[index] = ref}
+              d={`M ${index % 2 === 0 ? '30%, 0%' : '70%, 0%'} 
+                C ${index % 2 === 0 ? '70%, 33%' : '30%, 33%'} 
+                  ${index % 2 === 0 ? '30%, 66%' : '70%, 66%'} 
+                  ${index % 2 === 0 ? '70%, 100%' : '30%, 100%'}`}
+              stroke="rgba(var(--primary-rgb), 0.2)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="5,5"
+              className={styles['timeline-path']}
+            />
+          ))}
+        </svg>
+
+        <div className="space-y-10 relative">
           {experiences.map((exp, index) => (
             <div 
               key={exp.id} 
-              className="appear-animate bg-white rounded-xl shadow-sm border border-border p-6 md:p-8 transition-all duration-300 hover:shadow-md"
+              className="appear-animate bg-white rounded-xl shadow-sm border border-border p-6 md:p-8 transition-all duration-300 hover:shadow-md relative"
             >
+              <div
+                ref={ref => timelineRefs.current[index] = ref}
+                className={`${styles['timeline-dot']} absolute w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10`}
+                style={{ 
+                  left: index % 2 === 0 ? '30%' : '70%',
+                  top: '50%'
+                }}
+              />
+
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="md:col-span-1">
                   <div className="flex flex-col md:items-start">

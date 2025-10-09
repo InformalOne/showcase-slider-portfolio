@@ -10,6 +10,7 @@ import Education from '@/components/Education';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import RomeoSkills from '../components/RomeoSkills';
+import VideoHero from '../components/VideoHero';
 
 const Index = () => {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -126,8 +127,11 @@ const Index = () => {
     <div className="min-h-screen overflow-hidden">
       <Navbar />
       
-      {/* Fixed animated printer as background section */}
-      <IntroSection />
+      {/* Video Hero Section */}
+      <VideoHero />
+      
+      {/* Fixed animated printer as background section - Replaced by Video Hero
+      <IntroSection /> */}
       
       {/* Scrollable content container - adjusted to have no gap from the printer */}
       <div 

@@ -1,0 +1,5 @@
+Gsap for landing profile  
+glared opaque thing for skills closing
+create a gold glare card for certifications gsap reactive component for this  
+populate links thorugh out the app properly
+blue color lines for who am i - backgorund of the section

@@ -14,7 +14,10 @@ represent with images of it whihc will be uploaded later -
 teams below it main , teams below it dev outlook stake holders outlook meeting of minutes
 
 give it in smart manner
-
+---
+change later - 
+git config user.email "lafevel813@inilas.com"
+git config --global user.email "iamsanjay011o@gmail.com"
 for now u have put some icon, i need it to be image, whihc i will put in assets with names to be added here, it will be changed thoruhg out the app , for it, 
 Plugin page changes - 
 and in plugins -> if editable or plus icon clicked, give some toast message - allow user to select teams , or outllok or slack then next of toast, give configure connection button with text boxes - enter name, and ,schema = professional or personal / company - this acts like tags which is optional and can be fixed also listed as a column for all the rows. which does loading and then with given 

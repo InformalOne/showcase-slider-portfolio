@@ -18,10 +18,9 @@ const experiences = [
     duration: "2024 - Present",
     description: "Leading the development of generative AI models for content creation and image synthesis. Implemented transformer-based architecture that improved output quality by 35%.",
     responsibilities: [
-      "Finetuning LLM's for Fintech company",
       "Template Generation with respect to personalized documents",
       "Created Hyper-personalized Marketing Collateral Generation Interface",
-      "Automating data processing workflows to boost ROI by 60% with AI-Driven Marketing Collateral"
+      "Finetuning LLM's and Automating data processing workflows to boost ROI by 60% with AI-Driven Marketing Collateral"
     ]
   },
   {
@@ -32,8 +31,7 @@ const experiences = [
     duration: "2023 - 2024",
     description: "Developed and deployed machine learning models for natural language processing and computer vision applications. Created a recommendation system that increased user engagement by 28%.",
     responsibilities: [
-      "Building end-to-end ML pipelines from data preprocessing to model deployment",
-      "Implementing RAG pipelines and Faq chatbot that increased user retention",
+      "Built end-to-end ML and RAG pipelines from data preprocessing to model deployment",
       "Created Hyper-personalized Marketing Collateral Generation Interface",
       "Automating data processing workflows to boost ROI by 60% with AI-Driven Marketing Collateral"
     ]
@@ -56,37 +54,38 @@ const experiences = [
 
 const WorkExperience = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const curveRefs = useRef<(SVGPathElement | null)[]>([]);
+  const spiralPathRef = useRef<SVGPathElement>(null);
+  const blueLightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initialize timeline refs array
-    timelineRefs.current = timelineRefs.current.slice(0, experiences.length);
-    curveRefs.current = curveRefs.current.slice(0, experiences.length);
 
-    experiences.forEach((_, index) => {
-      if (timelineRefs.current[index] && curveRefs.current[index]) {
-        const path = curveRefs.current[index];
-        const timelineElement = timelineRefs.current[index];
-        
-        gsap.to(timelineElement, {
-          scrollTrigger: {
-            trigger: timelineElement,
-            start: 'top center',
-            end: 'bottom center',
-            scrub: 1,
-          },
-          motionPath: {
-            path: path,
-            align: path,
-            alignOrigin: [0.5, 0.5],
-            autoRotate: true
-          },
-          duration: 2,
-          ease: 'power1.inOut'
-        });
-      }
-    });
+    // Animate the blue light along the spiral path on scroll
+    if (spiralPathRef.current && blueLightRef.current && sectionRef.current) {
+      // Set initial position at the start of the path
+      gsap.set(blueLightRef.current, {
+        xPercent: -50,
+        yPercent: -50,
+      });
+
+      gsap.to(blueLightRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top center',
+          end: 'bottom center',
+          scrub: 1,
+          markers: false, // Set to true for debugging
+        },
+        motionPath: {
+          path: spiralPathRef.current,
+          align: spiralPathRef.current,
+          alignOrigin: [0.5, 0.5],
+          autoRotate: false,
+          start: 0,
+          end: 1,
+        },
+        ease: 'none',
+      });
+    }
 
     // Original intersection observer for other animations
     const observer = new IntersectionObserver(
@@ -119,7 +118,27 @@ const WorkExperience = () => {
   }, []);
 
   return (
-    <section id="experience" ref={sectionRef} className="py-20 md:py-32 overflow-hidden relative">
+    <section id="experience" ref={sectionRef} className="py-20 md:py-32 relative">
+      {/* Blue light that follows the spiral */}
+      <div 
+        ref={blueLightRef}
+        className="absolute w-6 h-6 rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(37, 99, 235, 1) 0%, rgba(59, 130, 246, 0.8) 30%, rgba(96, 165, 250, 0.4) 60%, transparent 100%)',
+          boxShadow: '0 0 30px 15px rgba(59, 130, 246, 0.6), 0 0 60px 30px rgba(96, 165, 250, 0.3), inset 0 0 10px rgba(147, 197, 253, 0.8)',
+          filter: 'blur(1px)',
+          zIndex: 50,
+          willChange: 'transform',
+        }}
+      >
+        <div 
+          className="absolute inset-0 rounded-full animate-pulse"
+          style={{
+            background: 'radial-gradient(circle, rgba(147, 197, 253, 0.6) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
       <div className="container-tight">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="appear-animate">
@@ -133,40 +152,183 @@ const WorkExperience = () => {
           </p>
         </div>
 
-        {/* SVG Timeline */}
-        <svg className="absolute left-0 w-full h-full pointer-events-none" style={{ zIndex: 0, top: '20%' }}>
-          {experiences.map((_, index) => (
-            <path
-              key={`curve-${index}`}
-              ref={ref => curveRefs.current[index] = ref}
-              d={`M ${index % 2 === 0 ? '30%, 0%' : '70%, 0%'} 
-                C ${index % 2 === 0 ? '70%, 33%' : '30%, 33%'} 
-                  ${index % 2 === 0 ? '30%, 66%' : '70%, 66%'} 
-                  ${index % 2 === 0 ? '70%, 100%' : '30%, 100%'}`}
-              stroke="rgba(var(--primary-rgb), 0.2)"
-              strokeWidth="2"
-              fill="none"
-              strokeDasharray="5,5"
-              className={styles['timeline-path']}
-            />
-          ))}
-        </svg>
+        {/* Wrapper for experiences with DNA spiral - flex layout */}
+        <div className="relative flex gap-8">
+          {/* Left side: DNA Spiral reserved space */}
+          <div className="hidden lg:block w-80 flex-shrink-0 relative" style={{ perspective: '1200px', minHeight: '100%' }}>
+            {/* SVG Timeline with DNA-like Spiral - 3D perspective */}
+            <svg 
+              className="absolute left-0 top-0 pointer-events-none" 
+              style={{ 
+                width: '320px', 
+                height: '100%',
+                minHeight: '100%',
+                zIndex: 1,
+                transform: 'rotateY(-15deg) rotateX(5deg)',
+                transformStyle: 'preserve-3d',
+              }}
+              viewBox="0 0 320 1200"
+              preserveAspectRatio="xMinYMin meet"
+            >
+          {/* Glow effect background */}
+          <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <linearGradient id="spiralGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'rgb(59, 130, 246)', stopOpacity: 0.8 }} />
+              <stop offset="50%" style={{ stopColor: 'rgb(37, 99, 235)', stopOpacity: 1 }} />
+              <stop offset="100%" style={{ stopColor: 'rgb(29, 78, 216)', stopOpacity: 0.7 }} />
+            </linearGradient>
+            <linearGradient id="spiralGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'rgb(96, 165, 250)', stopOpacity: 0.7 }} />
+              <stop offset="50%" style={{ stopColor: 'rgb(59, 130, 246)', stopOpacity: 0.9 }} />
+              <stop offset="100%" style={{ stopColor: 'rgb(37, 99, 235)', stopOpacity: 0.6 }} />
+            </linearGradient>
+          </defs>
 
-        <div className="space-y-10 relative">
+          {/* Main DNA-like spiral path - LEFT STRAND - Crisscross pattern */}
+          <path
+            ref={spiralPathRef}
+            className={styles['dna-spiral']}
+            d="M 60 20 
+               L 140 80
+               L 60 140
+               L 140 200
+               L 60 260
+               L 140 320
+               L 60 380
+               L 140 440
+               L 60 500
+               L 140 560
+               L 60 620
+               L 140 680
+               L 60 740
+               L 140 800
+               L 60 860
+               L 140 920
+               L 60 980
+               L 140 1040
+               L 60 1100
+               L 140 1160
+               L 60 1180"
+            stroke="url(#spiralGradient1)"
+            strokeWidth="6"
+            fill="none"
+            strokeLinecap="round"
+            filter="url(#glow)"
+          />
+          
+          {/* Secondary strand - RIGHT STRAND - Crisscross opposite */}
+          <path
+            className={styles['dna-spiral']}
+            d="M 140 20
+               L 60 80
+               L 140 140
+               L 60 200
+               L 140 260
+               L 60 320
+               L 140 380
+               L 60 440
+               L 140 500
+               L 60 560
+               L 140 620
+               L 60 680
+               L 140 740
+               L 60 800
+               L 140 860
+               L 60 920
+               L 140 980
+               L 60 1040
+               L 140 1100
+               L 60 1160
+               L 140 1180"
+            stroke="url(#spiralGradient2)"
+            strokeWidth="6"
+            fill="none"
+            strokeLinecap="round"
+            filter="url(#glow)"
+          />
+          
+          {/* Connecting bridges - MORE LINES between strands with 0.5 opacity */}
+          {Array.from({ length: 30 }, (_, i) => {
+            const y = 40 + (i * 40);
+            const progress = i / 29;
+            
+            // Calculate X positions for crisscross effect
+            const leftStrand = 60 + (Math.floor(i / 1.5) % 2 === 0 ? 0 : 80);
+            const rightStrand = 140 - (Math.floor(i / 1.5) % 2 === 0 ? 0 : 80);
+            
+            return (
+              <g key={`bridge-${i}`} className={styles['dna-bridge']} style={{ animationDelay: `${0.3 + i * 0.04}s` }}>
+                <line
+                  x1={leftStrand}
+                  y1={y}
+                  x2={rightStrand}
+                  y2={y}
+                  stroke={`rgba(${59 + progress * 40}, ${130 + progress * 35}, 246, 0.5)`}
+                  strokeWidth="2.5"
+                />
+                <circle 
+                  cx={leftStrand} 
+                  cy={y} 
+                  r="4" 
+                  fill={`rgba(37, 99, 235, ${0.5 + progress * 0.3})`}
+                  filter="url(#glow)"
+                />
+                <circle 
+                  cx={rightStrand} 
+                  cy={y} 
+                  r="4" 
+                  fill={`rgba(29, 78, 216, ${0.5 + progress * 0.3})`}
+                  filter="url(#glow)"
+                />
+              </g>
+            );
+          })}
+
+          {/* Additional futuristic connecting lines - diagonal cross patterns */}
+          {Array.from({ length: 15 }, (_, i) => {
+            const y = 80 + (i * 80);
+            return (
+              <g key={`cross-${i}`} opacity="0.3">
+                <line
+                  x1="60"
+                  y1={y - 20}
+                  x2="140"
+                  y2={y + 20}
+                  stroke="rgba(96, 165, 250, 0.4)"
+                  strokeWidth="1.5"
+                  strokeDasharray="5,5"
+                />
+                <line
+                  x1="140"
+                  y1={y - 20}
+                  x2="60"
+                  y2={y + 20}
+                  stroke="rgba(147, 197, 253, 0.4)"
+                  strokeWidth="1.5"
+                  strokeDasharray="5,5"
+                />
+              </g>
+            );
+          })}
+
+        </svg>
+        </div>
+
+        {/* Right side: Experience cards */}
+        <div className="flex-1">
+          <div className="space-y-10 relative">
           {experiences.map((exp, index) => (
             <div 
               key={exp.id} 
               className="appear-animate bg-white rounded-xl shadow-sm border border-border p-6 md:p-8 transition-all duration-300 hover:shadow-md relative"
             >
-              <div
-                ref={ref => timelineRefs.current[index] = ref}
-                className={`${styles['timeline-dot']} absolute w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10`}
-                style={{ 
-                  left: index % 2 === 0 ? '30%' : '70%',
-                  top: '50%'
-                }}
-              />
-
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="md:col-span-1">
                   <div className="flex flex-col md:items-start">
@@ -206,6 +368,8 @@ const WorkExperience = () => {
               </div>
             </div>
           ))}
+        </div>
+        </div>
         </div>
       </div>
     </section>

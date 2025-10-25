@@ -4,6 +4,90 @@
 			<p class="section-paragraph center-align margin-100" style="transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;">My technical expertise spans across cutting-edge AI/ML technologies, 
 				enabling me to deliver innovative solutions that drive business growth and digital transformation.</p>
 			<div class="skills-container">
+			<style>
+			/* Semicircle overlays on the left and right of the skills container */
+			.skills-container{ position: relative; }
+			.skills-container::before,
+			.skills-container::after{
+				content: "";
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 10%; /* covers ~10% of the container horizontally */
+				height: 60%; /* height of semicircle area; adjust if needed */
+				pointer-events: none; /* don't block interactions */
+				border-radius: 50% / 100% ;
+				/* radial gradient from semi-transparent at edges to opaque towards center of semicircle */
+				background: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.5) 100%);
+				opacity: 0.95; /* base opacity; gradient controls edge transparency */
+				mix-blend-mode: normal;
+			}
+			/* left semicircle */
+			.skills-container::before{
+				left: 0;
+				transform-origin: left center;
+				/* cut the circle in half visually by adjusting border-radius */
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+			/* right semicircle */
+			.skills-container::after{
+				right: 0;
+				transform-origin: right center;
+				/* flip the gradient horizontally so the opaque side points inward */
+				background: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.5) 100%);
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+			/* If your site uses a light background, invert colors to create a subtle highlight instead */
+			@media (prefers-color-scheme: light){
+				.skills-container::before,
+				.skills-container::after{
+					background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0.5) 100%);
+					opacity: 0.9;
+				}
+			}
+
+			/* Masked background layers (left/right) */
+			.testimonial-background-mask{
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 20%;
+				pointer-events: none;
+				overflow: visible;
+				z-index: 5; /* above skills but below modals */
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.testimonial-background-mask.left{ left: 0; }
+			.testimonial-background-mask.right{ right: 0; }
+
+			.border-glow-diagonal-top-right{
+				width: 300px;
+				height: 300px;
+				border-radius: 50%;
+				background: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0) 100%);
+				filter: blur(18px);
+				opacity: 0.8; /* tweak between 0.5 and 1 if needed */
+			}
+
+			@media (prefers-color-scheme: light){
+				.border-glow-diagonal-top-right{
+					background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 35%, rgba(255,255,255,0.4) 60%, rgba(255,255,255,0) 100%);
+					filter: blur(14px);
+					opacity: 0.9;
+				}
+			}
+			</style>
+			<!-- Left and right masked glow layers -->
+			<div class="testimonial-background-mask left" data-w-id="65762e64-4aa5-e963-6961-1a6f651f2a36">
+				<div class="border-glow-diagonal-top-right" style="transform: translate3d(1000px, 1000px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(45deg) skew(0deg, 0deg); transform-style: preserve-3d;"></div>
+			</div>
+			<div class="testimonial-background-mask right">
+				<div class="border-glow-diagonal-top-right" style="transform: translate3d(-1000px, 1000px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(135deg) skew(0deg, 0deg); transform-style: preserve-3d;"></div>
+			</div>
 				<div class="skills-marquee-container">
 					<div class="skills-marquee">
 						<div class="skills-list">

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, Github, ArrowRight } from 'lucide-react';
+import { ExternalLink, Github, ArrowRight, Video } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { projects } from '@/data/projects';
 
@@ -96,10 +96,10 @@ const Projects = () => {
                   <div 
                     className={cn(
                       "absolute inset-0 bg-primary/80 flex items-center justify-center opacity-0 transition-opacity duration-300",
-                      activeProject === project.id ? "opacity-90" : "group-hover:opacity-80"
+                      activeProject === project.id ? "opacity-100" : "group-hover:opacity-100"
                     )}
                   >
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4 relative z-10">
                       {project.links.live && (
                         <a 
                           href={project.links.live} 
@@ -120,6 +120,17 @@ const Projects = () => {
                           aria-label="View GitHub repository"
                         >
                           <Github size={18} className="text-primary" />
+                        </a>
+                      )}
+                      {project.links.video && (
+                        <a 
+                          href={project.links.video} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white flex items-center justify-center transition-transform hover:scale-110"
+                          aria-label="Watch project video"
+                        >
+                          <Video size={18} className="text-primary" />
                         </a>
                       )}
                     </div>

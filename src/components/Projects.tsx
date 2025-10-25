@@ -86,10 +86,21 @@ const Projects = () => {
                   : ""
               )}>
                 <div className="relative w-full h-52 mb-4 overflow-hidden rounded-lg">
-                  <div className="absolute inset-0 bg-gray-200"></div>
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
+                  {/* Use real project images; fall back to one of the supplied images if missing */}
+                  {/**
+                   * Fallbacks order: project.image -> crop.png -> globe.png -> meet.png -> hand_gesture.png -> plant.png -> seat.png
+                   */}
+                  <img
+                    src={
+                      project.image ||
+                      '/crop.png' ||
+                      '/globe.png' ||
+                      '/meet.png' ||
+                      '/hand_gesture.png' ||
+                      '/plant.png' ||
+                      '/seat.png'
+                    }
+                    alt={project.title}
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />

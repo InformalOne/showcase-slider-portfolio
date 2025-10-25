@@ -6,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+ans.txt 
+bun.lockb
+plan.txt 
+Romeo Portfolio copy.html 
 
 node_modules
 dist

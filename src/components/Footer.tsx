@@ -63,7 +63,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <a 
-                  href="#" 
+                  href="www.linkedin.com/in/sanjay-s-33bbb71bb" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -73,7 +73,7 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="#" 
+                  href="https://github.com/InformalOne" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -81,34 +81,29 @@ const Footer = () => {
                   GitHub
                 </a>
               </li>
+             
               <li>
                 <a 
-                  href="#" 
+                  href="https://x.com/Informal_one" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Dribbble
+                  Twitter
                 </a>
               </li>
-              <li>
+              
+               <li>
                 <a 
-                  href="#" 
+                  href="https://www.youtube.com/@formalinfinity2117" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Medium
+                  Youtube
                 </a>
               </li>
-              <li>
-                <a 
-                  href="mailto:hello@example.com" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Email
-                </a>
-              </li>
+
             </ul>
           </div>
         </div>

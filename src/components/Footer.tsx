@@ -11,6 +11,43 @@ const Footer = () => {
     });
   };
 
+  // Custom smooth scroll function matching Navbar functionality
+  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    if (href?.startsWith('/#')) {
+      const targetId = href.substring(2); // Remove '/#' prefix
+      const element = document.getElementById(targetId);
+      if (element) {
+        // Slower animation (doubled duration)
+        const startPosition = window.pageYOffset;
+        const targetPosition = element.offsetTop - 80;
+        const distance = targetPosition - startPosition;
+        const duration = 1500; // Increased duration for slower scroll
+        let start: number | null = null;
+        
+        // Custom animation function for smoother scrolling
+        const step = (timestamp: number) => {
+          if (!start) start = timestamp;
+          const progress = timestamp - start;
+          const percentage = Math.min(progress / duration, 1);
+          
+          // Easing function for smoother movement
+          const easeInOutCubic = (t: number) => 
+            t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+          
+          window.scrollTo(0, startPosition + distance * easeInOutCubic(percentage));
+          
+          if (progress < duration) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        
+        window.requestAnimationFrame(step);
+      }
+    }
+  };
+
   const currentYear = new Date().getFullYear();
 
   return (
@@ -31,29 +68,29 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/#about" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#about" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
                   About
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#projects" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#projects" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
                   Projects
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#certifications" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#certifications" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
                   Certifications
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#education" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#education" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
                   Education
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#contact" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#contact" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -63,7 +100,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <a 
-                  href="www.linkedin.com/in/sanjay-s-33bbb71bb" 
+                  href="https://www.linkedin.com/in/sanjay-s-33bbb71bb/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"

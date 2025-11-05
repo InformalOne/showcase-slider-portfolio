@@ -8,6 +8,13 @@ import styles from './WorkExperience.module.css';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
+// Ensure ScrollTrigger refreshes on window resize
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => {
+    ScrollTrigger.refresh();
+  });
+}
+
 // Dummy work experience data
 const experiences = [
   {
@@ -58,34 +65,48 @@ const WorkExperience = () => {
   const blueLightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Clean up any existing ScrollTriggers first
+    ScrollTrigger.getAll().forEach(st => st.kill());
 
-    // Animate the blue light along the spiral path on scroll
-    if (spiralPathRef.current && blueLightRef.current && sectionRef.current) {
-      // Set initial position at the start of the path
-      gsap.set(blueLightRef.current, {
-        xPercent: -50,
-        yPercent: -50,
-      });
+    // Small delay to ensure DOM is fully rendered
+    const timer = setTimeout(() => {
+      // Animate the blue light along the spiral path on scroll
+      if (spiralPathRef.current && blueLightRef.current && sectionRef.current) {
+        // Set initial position at the start of the path
+        gsap.set(blueLightRef.current, {
+          xPercent: -50,
+          yPercent: -50,
+        });
 
-      gsap.to(blueLightRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: 1,
-          markers: false, // Set to true for debugging
-        },
-        motionPath: {
-          path: spiralPathRef.current,
-          align: spiralPathRef.current,
-          alignOrigin: [0.5, 0.5],
-          autoRotate: false,
-          start: 0,
-          end: 1,
-        },
-        ease: 'none',
-      });
-    }
+        // Create the scroll-triggered animation
+        const scrollAnimation = gsap.to(blueLightRef.current, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.2,
+            markers: false, // Set to true for debugging
+            refreshPriority: -1,
+            invalidateOnRefresh: true,
+          },
+          motionPath: {
+            path: spiralPathRef.current,
+            align: spiralPathRef.current,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: false,
+            start: 0,
+            end: 1,
+          },
+          ease: 'none',
+          duration: 1,
+        });
+
+        // Refresh ScrollTrigger after a short delay to ensure everything is ready
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 200);
+      }
+    }, 100);
 
     // Original intersection observer for other animations
     const observer = new IntersectionObserver(
@@ -109,6 +130,7 @@ const WorkExperience = () => {
     }
 
     return () => {
+      clearTimeout(timer);
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }

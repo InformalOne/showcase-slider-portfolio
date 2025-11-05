@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ExternalLink, Github, ArrowRight, Video } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { projects } from '@/data/projects';
+import { getProjectImage } from '@/utils/imageUtils';
 
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -86,20 +87,9 @@ const Projects = () => {
                   : ""
               )}>
                 <div className="relative w-full h-52 mb-4 overflow-hidden rounded-lg">
-                  {/* Use real project images; fall back to one of the supplied images if missing */}
-                  {/**
-                   * Fallbacks order: project.image -> crop.png -> globe.png -> meet.png -> hand_gesture.png -> plant.png -> seat.png
-                   */}
+                  {/* Project image - uses square images for grid view */}
                   <img
-                    src={
-                      project.image ||
-                      '/crop.png' ||
-                      '/globe.png' ||
-                      '/meet.png' ||
-                      '/hand_gesture.png' ||
-                      '/plant.png' ||
-                      '/seat.png'
-                    }
+                    src={getProjectImage(project, false)}
                     alt={project.title}
                     className="w-full h-full object-cover"
                     loading="lazy"

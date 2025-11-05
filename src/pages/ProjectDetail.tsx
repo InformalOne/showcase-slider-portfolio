@@ -4,11 +4,14 @@ import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ArrowLeft, Github, ExternalLink, Calendar, Tag } from 'lucide-react';
-import { projects } from '@/data/projects'; // We'll create this data file
+import { projects } from '@/data/projects';
+import { getProjectImage, isProjectLottie } from '@/utils/imageUtils';
+import Lottie from 'lottie-react';
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [project, setProject] = useState<any>(null);
+  const [lottieData, setLottieData] = useState<any>(null);
   
   useEffect(() => {
     // Find the project with the matching id
@@ -17,6 +20,14 @@ const ProjectDetail = () => {
       setProject(foundProject);
       // Set page title
       document.title = `${foundProject.title} | Portfolio`;
+      
+      // Load Lottie data if needed
+      if (isProjectLottie(foundProject, true)) {
+        fetch(getProjectImage(foundProject, true))
+          .then(response => response.json())
+          .then(data => setLottieData(data))
+          .catch(error => console.error('Error loading Lottie animation:', error));
+      }
     }
     
     // Scroll to top when component mounts
@@ -95,13 +106,36 @@ const ProjectDetail = () => {
             </div>
           </div>
           
-          {/* Project image */}
-          <div className="relative w-full h-96 mb-12 rounded-xl overflow-hidden shadow-lg">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="w-full h-full object-cover"
-            />
+          {/* Project image/animation */}
+          <div className="relative w-full h-96 mb-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-gray-50 to-gray-100">
+            {isProjectLottie(project, true) ? (
+              lottieData ? (
+                <Lottie 
+                  animationData={lottieData}
+                  loop={true}
+                  autoplay={true}
+                  className="w-full h-full object-contain"
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    margin: 'auto'
+                  }}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p className="text-gray-500">Loading animation...</p>
+                  </div>
+                </div>
+              )
+            ) : (
+              <img 
+                src={getProjectImage(project, true)} 
+                alt={project.title} 
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
           
           {/* Project details */}

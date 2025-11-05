@@ -6,6 +6,8 @@ export const projects = [
     description: "An application that helps organizations to acknowledge the availablibilty of team mates and schedules of other employees.",
     longDescription: "This comprehensive redesign project focused on improving the customer journey from discovery to checkout. By conducting extensive user research and implementing data-driven design decisions, we were able to increase team engagement, team work  and attendance rates by 48% and reduce traffic at workplace by 15%.",
     image: "/seat.png",
+    detailImage: "/Business team discusses project.json",
+    isLottie: true,
     tags: ["UX Design", "UI", "Figma", "Prototyping", "Saas", "FullStack"],
     technologies: ["React", "Figma", "Mongo DB", "CSS", "User Testing", "Python", "Fastapi", "Rest API's", "webhooks"],
     challenge: "The organization faced difficulties in coordinating employee schedules and tracking team availability. The existing tools lacked real-time visibility, causing overlapping meetings, miscommunication, and reduced productivity. The challenge was to create a centralized, user-friendly platform to streamline team scheduling and enhance collaboration.",
@@ -29,10 +31,12 @@ export const projects = [
   {
     id: 2,
     title: "Crisis Jounralist AI",
-    description: "An AI-driven newsroom intelligence system that verifies, summarizes, and generates crisis-related news content in real time using Amazon Bedrock multi-agent architecture.",
-    longDescription: "Crisis Journalist AI is a cloud-native, Amazon Bedrock-powered platform designed to combat misinformation and accelerate trustworthy journalism during fast-evolving global events. Built on a multi-agent pipeline, the system ingests live crisis data from multiple verified APIs, validates authenticity, and generates concise, AI-verified news stories, social media captions, and short video narratives. Using AWS Bedrock (Claude Sonnet 3, 3.7) and FastAPI orchestration, it ensures journalists receive reliable, contextually accurate, and ready-to-publish insights within seconds.",
+    description: "Interactive dashboard for financial data visualization with real-time updates and customizable widgets.",
+    longDescription: "This financial dashboard provides users with a comprehensive view of their financial health through intuitive visualizations and real-time data analysis. The application enables users to track investments, monitor spending patterns, and receive personalized financial insights.",
     image: "/globe.png",
-    tags: ["AWS Bedrock", "FastAPI", "React", "AI Agents", "MediaTech"],
+    detailImage: "/Man and robot with computers sitting together in workplace.json",
+    isLottie: true,
+    tags: ["React", "D3.js", "Tailwind CSS", "API Integration"],
   technologies: [
     "React",
     "FastAPI",
@@ -59,7 +63,7 @@ export const projects = [
   role: "Lead AI Engineer & Full-Stack Developer",
   type: "Cloud-Native Web Application",
     links: {
-      live: "main.d1gbvovx2pgfa8.amplifyapp.com",
+      live: "https://main.d1gbvovx2pgfa8.amplifyapp.com",
       video: "https://vimeo.com/1129615449?fl=pl&fe=vl"
     }
   },
@@ -69,7 +73,9 @@ export const projects = [
     description: "A productivity application with collaborative features, notifications, and progress tracking.",
     longDescription: "This task management application was designed to enhance team productivity by providing a centralized platform for task assignment, progress tracking, and collaboration. The system includes intelligent task prioritization and integrates with existing calendar and email systems.",
     image: "/meet.png",
-    tags: ["React Native", "Teams Integration", "AWS Services", "Bedrock", "Webhooks"],
+    detailImage: "/Man Working on Laptop in Office.json",
+    isLottie: true,
+    tags: ["React Native", "Firebase", "Redux", "Mobile Development"],
     technologies: ["React Native", "Redux", "Firebase", "Push Notifications", "Cloud Functions"],
     challenge: "Building a cross-platform mobile application that could work offline while syncing data when connectivity was restored. Additionally, creating an intuitive UI that accommodated complex team hierarchies and permission systems.",
     features: [
@@ -80,21 +86,22 @@ export const projects = [
       "Detailed analytics and reporting",
       "Integration with popular productivity tools"
     ],
-    timeline: "July - September 2025",
-    role: "AI Engineer & Full-stack Developer",
-    type: "Web Application",
+    timeline: "June - November 2023",
+    role: "Mobile Developer & UI Designer",
+    type: "Mobile Application",
     links: {
-      live: "https://www.youtube.com/watch?v=dj3XQyVb_Gc",
-      github: "https://github.com/LiveProdigy/ui-proj",
-      // video: "https://example.com/video/meet-ai"
+      // live: "https://example.com",
+      github: "https://github.com",
+      video: "https://example.com/video/meet-ai"
     }
   },
   {
-  id: 4,
-  title: "Piano Notes",
-  description: "An AI-powered music recognition app that converts piano-playing videos into readable musical notes in real time.",
-  longDescription: "Piano Notes is a deep learning-based application that translates visual piano performances into structured musical notation. The system processes uploaded videos showing piano keys being played, detects falling bars or keypress movements, and converts them into corresponding note sequences (C, D, E, F, G, A, B). Using computer vision and sequence modeling, it bridges the gap between video-based piano learning and sheet music generation, helping learners and creators visualize their music in an interpretable format.",
-  image: "/pianp-eall.jpeg",
+    id: 4,
+    title: "Piano Notes",
+    description: "An AI-powered music recognition app that converts piano-playing videos into readable musical notes in real time.",
+    longDescription: "Piano Notes is a deep learning-based application that translates visual piano performances into structured musical notation. The system processes uploaded videos showing piano keys being played, detects falling bars or keypress movements, and converts them into corresponding note sequences (C, D, E, F, G, A, B). Using computer vision and sequence modeling, it bridges the gap between video-based piano learning and sheet music generation, helping learners and creators visualize their music in an interpretable format.",
+    image: "/pianp-eall.jpeg",
+    detailImage: "/pianp-eall.jpeg",
   tags: ["Deep Learning", "Computer Vision", "Audio Processing", "React"],
   technologies: [
     "Python",
@@ -127,8 +134,9 @@ export const projects = [
     id: 5,
     title: "Hand Gesture Recognition",
     description: "An AI-driven system that recognizes real-time hand gestures using MediaPipe and Python to control system and OS-level operations seamlessly.",
-  longDescription: "Hand Gesture Recognition is a computer vision-based AI project designed to interpret and map human hand movements to digital commands. Using MediaPipe for precise hand landmark detection and TensorFlow for gesture classification, the system enables users to perform OS operations such as volume control, media playback, and window navigation through intuitive gestures. The goal was to create a touchless interaction interface that enhances accessibility, efficiency, and user experience in human-computer interaction.",
-  image: "/hand_gesture.png",
+    longDescription: "Hand Gesture Recognition is a computer vision-based AI project designed to interpret and map human hand movements to digital commands. Using MediaPipe for precise hand landmark detection and TensorFlow for gesture classification, the system enables users to perform OS operations such as volume control, media playbook, and window navigation through intuitive gestures. The goal was to create a touchless interaction interface that enhances accessibility, efficiency, and user experience in human-computer interaction.",
+    image: "/hand_gesture.png",
+    detailImage: "/hand-wall.png",
    tags: ["Computer Vision", "AI Interaction", "MediaPipe", "Gesture Control"],
   technologies: [
     "Python",
@@ -148,7 +156,7 @@ export const projects = [
     "Fast and lightweight execution optimized for CPU performance",
     "Interactive frontend visualization with React for live gesture feedback"
   ],
-  timeline: "August 2025",
+  timeline: "December 2023",
   role: "Computer Vision Engineer & Developer",
   type: "AI Interaction System",
     links: {
@@ -162,7 +170,8 @@ export const projects = [
     title: "Crop Disease Prediction",
     description: "An AI-powered system that detects and classifies crop diseases from leaf images using deep learning models for smarter agricultural insights.",
   longDescription: "Crop Disease Prediction is a deep learning-based application built to assist farmers and agricultural researchers in early disease detection and prevention. By leveraging image classification techniques with convolutional neural networks (CNNs), the system analyzes plant leaf images to accurately identify disease types and suggest preventive measures. The project integrates a scalable backend for storing crop image data and real-time inference through an API service, empowering users with rapid and accessible plant health diagnostics.",
-  image: "/crop.png",
+  image: "/plant.png",
+  detailImage: "/alt_plant-rectangle.png",
   tags: ["Deep Learning", "Computer Vision", "Agriculture AI", "Sustainability"],
   technologies: [
     "Python",

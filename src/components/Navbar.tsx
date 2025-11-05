@@ -83,10 +83,10 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <a href="#about" className="navlink" onClick={handleNavLinkClick}>About</a>
-          <a href="#projects" className="navlink" onClick={handleNavLinkClick}>Projects</a>
-          <a href="#certifications" className="navlink" onClick={handleNavLinkClick}>Certifications</a>
-          <a href="#education" className="navlink" onClick={handleNavLinkClick}>Education</a>
-          <a href="#contact" className="navlink" onClick={handleNavLinkClick}>Contact</a>
+          <a href="#projects" className="navlink" onClick={handleNavLinkClick}>Skills</a>
+          <a href="#certifications" className="navlink" onClick={handleNavLinkClick}>Projects</a>
+          <a href="#education" className="navlink" onClick={handleNavLinkClick}>Expertise</a>
+          <a href="#contact" className="navlink" onClick={handleNavLinkClick}>Education</a>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -118,28 +118,28 @@ const Navbar = () => {
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
           onClick={handleNavLinkClick}
         >
-          Projects
+          Skills
         </a>
         <a 
           href="#certifications" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
           onClick={handleNavLinkClick}
         >
-          Certifications
+          Projects
         </a>
         <a 
           href="#education" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
           onClick={handleNavLinkClick}
         >
-          Education
+          Expertise
         </a>
         <a 
           href="#contact" 
           className="text-lg font-medium py-3 px-4 hover:bg-secondary rounded-lg transition-colors"
           onClick={handleNavLinkClick}
         >
-          Contact
+          Education
         </a>
       </div>
     </header>

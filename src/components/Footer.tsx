@@ -74,22 +74,22 @@ const Footer = () => {
               </li>
               <li>
                 <a href="/#projects" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
-                  Projects
+                  Skills
                 </a>
               </li>
               <li>
                 <a href="/#certifications" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
-                  Certifications
+                  Projects
                 </a>
               </li>
               <li>
                 <a href="/#education" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
-                  Education
+                  Expertise
                 </a>
               </li>
               <li>
                 <a href="/#contact" className="text-muted-foreground hover:text-primary transition-colors" onClick={handleNavLinkClick}>
-                  Contact
+                  Education
                 </a>
               </li>
             </ul>

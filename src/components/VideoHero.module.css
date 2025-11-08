@@ -77,3 +77,138 @@
     transform: translateY(-8px);
   }
 }
+
+/* Text Overlay Styles */
+.text-overlay {
+  position: fixed;
+  left: 8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  pointer-events: none;
+  width: 600px;
+  height: 200px;
+}
+
+
+
+.text-element {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  perspective: 1000px;
+  opacity: 0; /* Hidden by default */
+  visibility: hidden;
+  will-change: opacity, transform;
+}
+
+.welcome-text,
+.to-my-text,
+.portfolio-text {
+  font-size: 6rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  margin: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e3a8a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+  filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
+  transform-style: preserve-3d;
+}
+
+.welcome-text {
+  font-size: 6.5rem;
+}
+
+.to-my-text {
+  font-size: 6rem;
+}
+
+.portfolio-text {
+  font-size: 6.2rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 30%, #8b5cf6 60%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .text-overlay {
+    left: 4rem;
+    width: 500px;
+  }
+  
+  .welcome-text,
+  .to-my-text,
+  .portfolio-text {
+    font-size: 4.5rem;
+  }
+  
+  .welcome-text {
+    font-size: 5rem;
+  }
+  
+  .to-my-text {
+    font-size: 4.5rem;
+  }
+  
+  .portfolio-text {
+    font-size: 4.7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-overlay {
+    left: 2rem;
+    width: 400px;
+  }
+  
+  .welcome-text,
+  .to-my-text,
+  .portfolio-text {
+    font-size: 3.5rem;
+  }
+  
+  .welcome-text {
+    font-size: 4rem;
+  }
+  
+  .to-my-text {
+    font-size: 3.5rem;
+  }
+  
+  .portfolio-text {
+    font-size: 3.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-overlay {
+    left: 1rem;
+    width: 300px;
+  }
+  
+  .welcome-text,
+  .to-my-text,
+  .portfolio-text {
+    font-size: 2.5rem;
+  }
+  
+  .welcome-text {
+    font-size: 2.8rem;
+  }
+  
+  .to-my-text {
+    font-size: 2.5rem;
+  }
+  
+  .portfolio-text {
+    font-size: 2.6rem;
+  }
+}

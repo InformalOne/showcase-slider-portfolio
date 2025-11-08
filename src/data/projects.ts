@@ -171,7 +171,7 @@ export const projects = [
     description: "An AI-powered system that detects and classifies crop diseases from leaf images using deep learning models for smarter agricultural insights.",
   longDescription: "Crop Disease Prediction is a deep learning-based application built to assist farmers and agricultural researchers in early disease detection and prevention. By leveraging image classification techniques with convolutional neural networks (CNNs), the system analyzes plant leaf images to accurately identify disease types and suggest preventive measures. The project integrates a scalable backend for storing crop image data and real-time inference through an API service, empowering users with rapid and accessible plant health diagnostics.",
   image: "/plant.png",
-  detailImage: "/alt_plant-rectangle.png",
+  detailImage: "/agri.png",
   tags: ["Deep Learning", "Computer Vision", "Agriculture AI", "Sustainability"],
   technologies: [
     "Python",

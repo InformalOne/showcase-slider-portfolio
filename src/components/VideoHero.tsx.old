@@ -228,10 +228,12 @@ const VideoHero = () => {
         </video>
       </div>
 
+      {/* Animated Text Container */}
       <div 
         ref={textContainerRef}
         className={styles['text-overlay']}
       >
+        {/* Welcome Text */}
         <div 
           ref={welcomeRef}
           className={styles['text-element']}
@@ -239,6 +241,7 @@ const VideoHero = () => {
           <h1 className={styles['welcome-text']}>Welcome</h1>
         </div>
 
+        {/* To My Text */}
         <div 
           ref={toMyRef}
           className={styles['text-element']}
@@ -246,6 +249,7 @@ const VideoHero = () => {
           <h1 className={styles['to-my-text']}>To My</h1>
         </div>
 
+        {/* Portfolio Text */
         <div 
           ref={portfolioRef}
           className={styles['text-element']}
@@ -270,7 +274,7 @@ const VideoHero = () => {
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
                 strokeWidth={2} 
-                d="m19 14-7 7m0 0-7-7m7 7V3"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
               />
             </svg>
           </div>

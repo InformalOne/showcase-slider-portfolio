@@ -65,8 +65,13 @@ const WorkExperience = () => {
   const blueLightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Clean up any existing ScrollTriggers first
-    ScrollTrigger.getAll().forEach(st => st.kill());
+    // Clean up any existing ScrollTriggers for this component first
+    const existingTriggers = ScrollTrigger.getAll();
+    existingTriggers.forEach(st => {
+      if (st.vars && st.vars.trigger === sectionRef.current) {
+        st.kill();
+      }
+    });
 
     // Small delay to ensure DOM is fully rendered
     const timer = setTimeout(() => {
@@ -76,19 +81,37 @@ const WorkExperience = () => {
         gsap.set(blueLightRef.current, {
           xPercent: -50,
           yPercent: -50,
+          opacity: 0,
         });
 
         // Create the scroll-triggered animation
-        const scrollAnimation = gsap.to(blueLightRef.current, {
+        const scrollAnimation = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.2,
-            markers: false, // Set to true for debugging
-            refreshPriority: -1,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            scrub: 1,
+            markers: false,
+            id: 'workExperience-blueLight',
+            refreshPriority: 0,
             invalidateOnRefresh: true,
-          },
+            onEnter: () => {
+              gsap.to(blueLightRef.current, { opacity: 1, duration: 0.5 });
+            },
+            onLeave: () => {
+              gsap.to(blueLightRef.current, { opacity: 0, duration: 0.5 });
+            },
+            onEnterBack: () => {
+              gsap.to(blueLightRef.current, { opacity: 1, duration: 0.5 });
+            },
+            onLeaveBack: () => {
+              gsap.to(blueLightRef.current, { opacity: 0, duration: 0.5 });
+            }
+          }
+        });
+
+        // Add the motion path animation to the timeline
+        scrollAnimation.to(blueLightRef.current, {
           motionPath: {
             path: spiralPathRef.current,
             align: spiralPathRef.current,
@@ -104,9 +127,9 @@ const WorkExperience = () => {
         // Refresh ScrollTrigger after a short delay to ensure everything is ready
         setTimeout(() => {
           ScrollTrigger.refresh();
-        }, 200);
+        }, 300);
       }
-    }, 100);
+    }, 150);
 
     // Original intersection observer for other animations
     const observer = new IntersectionObserver(
@@ -134,8 +157,13 @@ const WorkExperience = () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }
-      // Clean up ScrollTrigger
-      ScrollTrigger.getAll().forEach(st => st.kill());
+      // Clean up only this component's ScrollTriggers
+      const existingTriggers = ScrollTrigger.getAll();
+      existingTriggers.forEach(st => {
+        if (st.vars && (st.vars.trigger === sectionRef.current || st.vars.id === 'workExperience-blueLight')) {
+          st.kill();
+        }
+      });
     };
   }, []);
 
